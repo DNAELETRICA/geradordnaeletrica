@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNA Elétrica — Gerador de Contrato e Procuração</title>
+<style>
+:root{
+  --bg:#eef1f6; --card:#fff; --ink:#16202f; --muted:#6a7688; --line:#dde3ee;
+  --brand:#0d5c3f; --brand-2:#12805a; --brand-soft:#e8f5ef; --err:#c0392b;
+  --sun:#f5a623; --shadow:0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.45}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--ink)}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:10px 18px;background:linear-gradient(100deg,#0b4a34,#0d5c3f 55%,#11704e);color:#fff;box-shadow:0 2px 12px rgba(9,20,38,.25)}
+.brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:700;letter-spacing:.2px}
+.brand small{display:block;font-weight:400;font-size:11.5px;opacity:.82}
+.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#fff;color:var(--brand);
+  font-weight:800;font-size:13px;letter-spacing:.5px;box-shadow:inset 0 0 0 2px rgba(13,92,63,.15)}
+.mark b{color:var(--sun)}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- buttons ---------- */
+.btn{border:1px solid transparent;border-radius:9px;padding:8px 14px;font-weight:600;font-size:13px;transition:.15s;white-space:nowrap}
+.btn.primary{background:#fff;color:var(--brand);box-shadow:0 2px 6px rgba(0,0,0,.14)}
+.btn.primary:hover{background:#f2fbf6;transform:translateY(-1px)}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.38)}
+.btn.ghost:hover{background:rgba(255,255,255,.22)}
+.btn.solid{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.solid:hover{background:var(--brand-2)}
+.btn.soft{background:var(--brand-soft);color:var(--brand);border-color:#c9e6d8}
+.btn.soft:hover{background:#d9f0e6}
+.btn.busy{opacity:.65;pointer-events:none}
+.btn.wide{width:100%;padding:11px 14px;font-size:13.5px}
+
+/* ---------- layout ---------- */
+.wrap{display:grid;grid-template-columns:400px minmax(0,1fr);gap:18px;padding:18px;align-items:start}
+@media (max-width:1120px){.wrap{grid-template-columns:1fr}}
+.col-form{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.card-h{display:flex;align-items:center;gap:9px;padding:12px 15px;border-bottom:1px solid var(--line);background:linear-gradient(#fbfcfe,#f5f8fc)}
+.card-h .n{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:var(--brand-soft);color:var(--brand);font-size:11.5px;font-weight:800}
+.card-h h3{margin:0;font-size:13px;font-weight:700}
+.card-h .tag{margin-left:auto;font-size:10.5px;font-weight:700;color:var(--brand);background:var(--brand-soft);border-radius:99px;padding:3px 9px}
+.card-b{padding:14px 15px 16px;display:grid;grid-template-columns:1fr 1fr;gap:11px 12px}
+.card-b .full{grid-column:1/-1}
+label.f{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.35px;text-transform:uppercase;margin:0 0 5px}
+label.f .req{color:var(--err);font-weight:800}
+label.f .hint{display:block;font-weight:500;text-transform:none;letter-spacing:0;font-size:11px;color:#93a0b3;margin-top:2px}
+
+/* ---------- INPUTS EM DESTAQUE ---------- */
+input.i,select.i,textarea.i{width:100%;padding:9px 10px;border-radius:9px;font-size:13.5px;transition:.15s;
+  background:#fffdf1;border:1.5px solid #e9c469;box-shadow:inset 0 0 0 1px rgba(245,166,35,.10)}
+input.i::placeholder,textarea.i::placeholder{color:#b39a5c;opacity:1}
+input.i:hover,select.i:hover,textarea.i:hover{border-color:#d9a933;background:#fffce9}
+input.i:focus,select.i:focus,textarea.i:focus{outline:none;border-color:var(--brand-2);background:#fff;box-shadow:0 0 0 3px rgba(18,128,90,.16)}
+input.i.filled,select.i.filled,textarea.i.filled{background:#eafaf1;border-color:#8ed0b1;border-left:4px solid var(--brand-2);color:#123}
+textarea.i{resize:vertical;min-height:74px;line-height:1.45}
+input.i[readonly]{background:#f4f7fb;color:var(--muted);border-color:var(--line);border-left-width:1.5px}
+input.i.invalid,select.i.invalid{border-color:var(--err)!important;background:#fdecea!important;border-left:4px solid var(--err)!important;animation:shake .32s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#7d8b9e;padding:0 4px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.legend .l1 i{background:#fffdf1;border:1.5px solid #e9c469}
+.legend .l2 i{background:#eafaf1;border:1.5px solid #8ed0b1}
+.f-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#3d4a5d;cursor:pointer}
+.f-check input{width:17px;height:17px;accent-color:var(--brand);cursor:pointer}
+.sub-note{font-size:11.5px;color:#8492a6;margin:2px 0 0}
+
+/* ---------- kWp badge ---------- */
+.kwp{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px 13px;border-radius:11px;background:linear-gradient(100deg,#0d5c3f,#12805a);color:#fff}
+.kwp span{font-size:11px;text-transform:uppercase;letter-spacing:.7px;opacity:.85;font-weight:700}
+.kwp strong{font-size:21px;letter-spacing:.4px;font-variant-numeric:tabular-nums}
+.kwp em{font-style:normal;font-size:11px;opacity:.85;display:block;text-align:right;margin-top:2px}
+
+/* ---------- parcelas ---------- */
+.pag-head,.pag-row{display:grid;grid-template-columns:34px 1.15fr 1fr 96px 28px;gap:5px;align-items:center}
+.pag-head{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.2px;padding:0 2px 4px}
+.pag-row{margin-bottom:6px}
+.pag-row input,.pag-row select{padding:7px 6px;border-radius:8px;font-size:12px;width:100%;
+  background:#fffdf1;border:1.5px solid #e9c469}
+.pag-row input:focus,.pag-row select:focus{outline:none;border-color:var(--brand-2);background:#fff;box-shadow:0 0 0 3px rgba(18,128,90,.16)}
+.pag-row input.filled,.pag-row select.filled{background:#eafaf1;border-color:#8ed0b1}
+.pag-row .del{border:1px solid var(--line);background:#fff;border-radius:8px;width:28px;height:31px;color:#b6c0cf;font-size:13px;line-height:1}
+.pag-row .del:hover{color:var(--err);border-color:#f2c4bf;background:#fdf3f2}
+.pag-row .auto{font-size:10px;color:#8a9aab;text-align:right;display:block;margin-top:2px}
+.pag-resumo{font-size:11.5px;color:#66768a;display:flex;justify-content:space-between;gap:8px;padding:3px 2px 0}
+.pag-resumo b{color:var(--brand)}
+
+/* ---------- preview ---------- */
+.col-preview{min-width:0;display:flex;flex-direction:column;gap:10px}
+.preview-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tabs{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:11px;padding:4px;box-shadow:var(--shadow)}
+.tab{border:0;background:transparent;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.tab.active{background:var(--brand);color:#fff;box-shadow:0 1px 4px rgba(13,92,63,.3)}
+.preview-hint{margin-left:auto;font-size:11.5px;color:#8492a6;text-align:right}
+.doc-scroll{background:#e6ebf2;border:1px solid var(--line);border-radius:14px;padding:18px;overflow:auto;max-height:calc(100vh - 150px);box-shadow:var(--shadow)}
+.doc{zoom:.80}
+@media (max-width:1500px){.doc{zoom:.70}}
+@media (max-width:1240px){.doc{zoom:.60}}
+@media (max-width:980px){.doc{zoom:.52}}
+.pdf-holder{position:absolute;left:0;top:0;width:794px;background:#fff;z-index:-1;margin-left:-11000px;zoom:1!important}
+.pdf-holder .doc{zoom:1!important}
+.blk{display:flow-root}
+#paginate .sheet{box-shadow:none}
+.pdf-holder .sheet{margin:0!important;box-shadow:none!important}
+#paginate{position:absolute;left:-11000px;top:0;width:794px;zoom:1!important}
+
+/* ---------- sheet A4 ---------- */
+.sheet{position:relative;width:794px;height:1123px;background:#fff;overflow:hidden;margin:0 0 16px;box-shadow:0 6px 26px rgba(16,24,40,.16)}
+.sheet .flow{position:absolute;top:208px;left:113px;width:605px;bottom:86px;overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;font-size:12pt;line-height:1.5;color:#111}
+.sheet.proc .flow{font-size:12pt}
+.sheet .flow h1.title{font-size:12.5pt;font-weight:700;text-align:center;margin:0 0 12pt;line-height:1.4}
+.sheet .flow h1.title.big{font-size:14pt;letter-spacing:.5px;text-align:center}
+.sheet .flow .sub{font-weight:700;margin:0 0 7pt;font-size:12pt}
+.sheet .flow h2.clause{font-size:12pt;font-weight:700;margin:10pt 0 5pt;line-height:1.35}
+.sheet .flow p{margin:0 0 6pt;text-align:justify;orphans:2;widows:2}
+.sheet .flow p.li{margin:0 0 4pt;text-align:left}
+.sheet .flow p.center{text-align:center}
+.sheet .flow table{width:100%;border-collapse:collapse;margin:6pt 0 9pt;font-size:10pt}
+.sheet .flow th,.sheet .flow td{border:1px solid #808c9c;padding:5pt 6pt;vertical-align:middle;text-align:left}
+.sheet .flow th{background:#eef2f7;font-weight:700}
+.sheet .flow table.t-equip td.qt,.sheet .flow table.t-equip th.qt{width:24%;text-align:center}
+.sheet .flow table.t-pag th.c,.sheet .flow table.t-pag td.c{width:9%;text-align:center}
+.sheet .flow table.t-pag th.r,.sheet .flow table.t-pag td.r{width:23%;text-align:right}
+.sheet .flow .obs{margin:9pt 0 11pt;padding:8pt 10pt;border:1px solid #b8c4d4;background:#f7fafd;font-size:10.5pt;text-align:justify}
+.sheet .flow .obs .obs-t{font-weight:700;letter-spacing:.4px;margin-bottom:3pt}
+.sheet .flow .sigwrap{margin-top:14pt;text-align:center}
+.sheet .flow .sigline{margin:0 auto;width:64%;border-top:1px solid #333;padding-top:4pt;font-weight:700;font-size:11pt}
+
+/* cabeçalho / rodapé (arte original do .docx) */
+.hf-top{position:absolute;left:0;top:0;width:794px;height:183px}
+.hf-top .ctt{position:absolute;right:131px;top:73px;width:320px;text-align:right;font-family:Arial,Helvetica,sans-serif}
+.hf-top .ctt span{display:block;height:25px;line-height:25px;white-space:nowrap;font-size:11.3px;color:#3a3a3a}
+.hf-bot{position:absolute;left:0;bottom:0;width:794px;height:84px}
+
+/* ---------- toast / aviso ---------- */
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);background:#16202f;color:#fff;
+  padding:10px 16px;border-radius:10px;font-size:12.5px;opacity:0;pointer-events:none;transition:.25s;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25);max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--err)}
+.foot-note{font-size:11.5px;color:#7d8b9e;padding:0 2px 22px;text-align:center}
+.foot-note a{color:var(--brand);text-decoration:none;border-bottom:1px dotted #9cc9b6}
+.print-warn{display:none;padding:60px 30px;text-align:center;font-family:system-ui,Arial,sans-serif}
+.print-warn h2{color:#c0392b;font-size:20pt;margin:0 0 12px}
+.print-warn p{font-size:13pt;color:#333}
+
+
+/* ---------- modo documento (?doc=contrato|procuracao) ---------- */
+body.docmode .topbar,body.docmode .col-form,body.docmode .preview-head,
+body.docmode .foot-note,body.docmode #paginate{display:none!important}
+body.docmode .wrap{display:block;padding:0}
+body.docmode .doc-scroll{border:0;background:#fff;padding:0;max-height:none;overflow:visible;box-shadow:none;border-radius:0}
+body.docmode .doc{zoom:1}
+body.docmode .sheet{box-shadow:none;margin:0 auto 10px}
+
+/* ---------- impressão ---------- */
+@media print{
+  @page{size:A4;margin:0}
+  .topbar,.col-form,.preview-head,.foot-note,.toast{display:none!important}
+  .wrap{display:block;padding:0;gap:0}
+  .doc-scroll{border:0;padding:0;max-height:none;overflow:visible;background:#fff;box-shadow:none;border-radius:0}
+  .doc{zoom:1!important}
+  .sheet{box-shadow:none!important;margin:0!important;page-break-after:always;break-after:page;page-break-inside:avoid}
+  .sheet:last-child{page-break-after:auto}
+  body{background:#fff}
+  body.printblocked .wrap{display:none!important}
+  body.printblocked .print-warn{display:block!important}
+}
+</style>
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">DN<b>A</b></span>
+    <span>Gerador de Contrato e Procuração
+      <small>DNA Elétrica Energia Solar · CNPJ 30.002.569/0001-57 · Itaúna/MG</small>
+    </span>
+  </div>
+  <div class="top-actions">
+    <button type="button" class="btn primary" id="btnPdfContrato">Baixar contrato (PDF)</button>
+    <button type="button" class="btn primary" id="btnPdfProc">Baixar procuração (PDF)</button>
+    <button type="button" class="btn ghost" id="btnPrint">Imprimir</button>
+    <button type="button" class="btn ghost" id="btnLimpar">Limpar</button>
+  </div>
+</header>
+
+<div class="print-warn">
+  <h2>Documento não liberado para impressão</h2>
+  <p>Existem campos obrigatórios em branco. Volte à tela, preencha os campos destacados em vermelho e imprima novamente.</p>
+</div>
+
+<main class="wrap">
+  <aside class="col-form">
+    <div class="legend">
+      <span class="l1"><i></i>Campo a preencher</span>
+      <span class="l2"><i></i>Preenchido</span>
+    </div>
+
+    <section class="card">
+      <div class="card-h"><span class="n">1</span><h3>Dados do cliente</h3><span class="tag" id="tagTipoPessoa">PF</span></div>
+      <div class="card-b">
+        <div class="full">
+          <label class="f" for="cliNome">Nome completo / Razão social <span class="req">*</span></label>
+          <input class="i" id="cliNome" type="text" autocomplete="off" placeholder="Digite o nome do cliente">
+        </div>
+        <div class="full">
+          <label class="f" for="cliDoc">CPF ou CNPJ <span class="req">*</span></label>
+          <input class="i" id="cliDoc" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00">
+        </div>
+        <div class="full">
+          <label class="f" for="cliCep">CEP <span class="req">*</span>
+            <span class="hint">Digite os 8 números e o endereço é preenchido automaticamente</span>
+          </label>
+          <input class="i" id="cliCep" type="text" inputmode="numeric" autocomplete="off" placeholder="00000-000">
+        </div>
+        <div class="full">
+          <label class="f" for="cliLogradouro">Rua / Logradouro <span class="req">*</span></label>
+          <input class="i" id="cliLogradouro" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+        <div>
+          <label class="f" for="cliNumero">Número <span class="req">*</span></label>
+          <input class="i" id="cliNumero" type="text" autocomplete="off" placeholder="Nº">
+        </div>
+        <div>
+          <label class="f" for="cliCompl">Complemento</label>
+          <input class="i" id="cliCompl" type="text" autocomplete="off" placeholder="CS / Apto 2">
+        </div>
+        <div>
+          <label class="f" for="cliBairro">Bairro <span class="req">*</span></label>
+          <input class="i" id="cliBairro" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+        <div>
+          <label class="f" for="cliUf">UF <span class="req">*</span></label>
+          <input class="i" id="cliUf" type="text" maxlength="2" autocomplete="off" placeholder="MG">
+        </div>
+        <div class="full">
+          <label class="f" for="cliCidade">Cidade <span class="req">*</span></label>
+          <input class="i" id="cliCidade" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+        <div class="full">
+          <label class="f-check"><input type="checkbox" id="chkInstDiff"> A usina será instalada em outro endereço</label>
+          <p class="sub-note">Se marcado, o contrato usa um endereço de instalação diferente do endereço do cliente.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="cardInst" hidden>
+      <div class="card-h"><span class="n">2</span><h3>Endereço da instalação</h3><span class="tag">Usina</span></div>
+      <div class="card-b">
+        <div class="full">
+          <label class="f" for="instCep">CEP da instalação</label>
+          <input class="i" id="instCep" type="text" inputmode="numeric" autocomplete="off" placeholder="00000-000">
+        </div>
+        <div class="full">
+          <label class="f" for="instLogradouro">Rua / Logradouro</label>
+          <input class="i" id="instLogradouro" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+        <div>
+          <label class="f" for="instNumero">Número</label>
+          <input class="i" id="instNumero" type="text" autocomplete="off" placeholder="Nº">
+        </div>
+        <div>
+          <label class="f" for="instCompl">Complemento</label>
+          <input class="i" id="instCompl" type="text" autocomplete="off" placeholder="Sítio / Galpão">
+        </div>
+        <div>
+          <label class="f" for="instBairro">Bairro</label>
+          <input class="i" id="instBairro" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+        <div>
+          <label class="f" for="instUf">UF</label>
+          <input class="i" id="instUf" type="text" maxlength="2" autocomplete="off" placeholder="MG">
+        </div>
+        <div class="full">
+          <label class="f" for="instCidade">Cidade</label>
+          <input class="i" id="instCidade" type="text" autocomplete="off" placeholder="Preenchido pelo CEP">
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><span class="n">3</span><h3>Equipamentos da usina</h3></div>
+      <div class="card-b">
+        <div class="full">
+          <label class="f" for="invMarca">Marca do inversor <span class="req">*</span></label>
+          <input class="i" id="invMarca" type="text" autocomplete="off" placeholder="Ex.: SUNGROW">
+        </div>
+        <div>
+          <label class="f" for="invPot">Potência do inversor (kW) <span class="req">*</span></label>
+          <input class="i" id="invPot" type="text" inputmode="decimal" autocomplete="off" placeholder="6">
+        </div>
+        <div>
+          <label class="f" for="invQtd">Qtd. de inversores <span class="req">*</span></label>
+          <input class="i" id="invQtd" type="text" inputmode="numeric" autocomplete="off" placeholder="1">
+        </div>
+        <div class="full">
+          <label class="f" for="painelMarca">Marca do painel <span class="req">*</span></label>
+          <input class="i" id="painelMarca" type="text" autocomplete="off" placeholder="Ex.: TRINA">
+        </div>
+        <div>
+          <label class="f" for="painelWp">Potência do painel (Wp) <span class="req">*</span></label>
+          <input class="i" id="painelWp" type="text" inputmode="decimal" autocomplete="off" placeholder="620">
+        </div>
+        <div>
+          <label class="f" for="painelQtd">Qtd. de painéis <span class="req">*</span></label>
+          <input class="i" id="painelQtd" type="text" inputmode="numeric" autocomplete="off" placeholder="10">
+        </div>
+        <div class="full">
+          <label class="f" for="estrutura">Estrutura / tipo de telhado</label>
+          <input class="i" id="estrutura" type="text" autocomplete="off" placeholder="Ex.: P/ TELHADO CERÂMICO">
+        </div>
+        <div class="kwp">
+          <span>Potência do sistema<br><em id="kwpCalc">— Wp × — painéis</em></span>
+          <strong id="kwpOut">— kWp</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><span class="n">4</span><h3>Valor e pagamento</h3></div>
+      <div class="card-b">
+        <div class="full">
+          <label class="f" for="valorTotal">Valor total do contrato <span class="req">*</span>
+            <span class="hint">Digite uma vez só — o valor é repetido automaticamente onde aparecer</span>
+          </label>
+          <input class="i" id="valorTotal" type="text" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">
+        </div>
+        <div class="full">
+          <label class="f">Condições de pagamento</label>
+          <div class="pag-head"><span>Nº</span><span>Forma de pagamento</span><span>Descrição</span><span>Valor</span><span></span></div>
+          <div id="pagRows"></div>
+          <button type="button" class="btn soft wide" id="btnAddPag" style="margin-top:6px">+ Adicionar forma de pagamento</button>
+          <div class="pag-resumo"><span>Total informado</span><b id="pagTotal">R$ 0,00</b></div>
+          <p class="sub-note">A descrição é opcional: em “à vista” deixe em branco. O valor de cada linha, se não for digitado, usa o saldo restante do total.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><span class="n">5</span><h3>Observação do contrato</h3></div>
+      <div class="card-b">
+        <div class="full">
+          <label class="f-check"><input type="checkbox" id="chkObs"> Terá observação no contrato?</label>
+          <p class="sub-note">Se desmarcado, nenhuma observação é impressa e este campo não é exigido.</p>
+        </div>
+        <div class="full" id="obsWrap" hidden>
+          <label class="f" for="obs">Texto da observação</label>
+          <textarea class="i" id="obs" rows="3" placeholder="Escreva aqui a observação que deve sair no contrato"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><span class="n">6</span><h3>Assinatura</h3></div>
+      <div class="card-b">
+        <div>
+          <label class="f" for="assinaturaLocal">Local <span class="req">*</span></label>
+          <input class="i" id="assinaturaLocal" type="text" autocomplete="off" placeholder="Itaúna">
+        </div>
+        <div>
+          <label class="f" for="foroComarca">Foro da comarca <span class="req">*</span></label>
+          <input class="i" id="foroComarca" type="text" autocomplete="off" placeholder="ITAÚNA - MG">
+        </div>
+        <div class="full">
+          <label class="f" for="dataAssinatura">Data por extenso <span class="req">*</span></label>
+          <input class="i" id="dataAssinatura" type="text" autocomplete="off" placeholder="Itaúna, 16 de novembro de 2026">
+        </div>
+        <div class="full" style="display:flex;gap:8px">
+          <button type="button" class="btn solid wide" id="btnPdfContrato2">Gerar contrato em PDF</button>
+          <button type="button" class="btn soft wide" id="btnPdfProc2">Gerar procuração em PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="foot-note">Os dados ficam salvos apenas neste navegador. O CEP é consultado na base pública do <a href="https://viacep.com.br" target="_blank" rel="noopener">ViaCEP</a>.</p>
+  </aside>
+
+  <section class="col-preview">
+    <div class="preview-head">
+      <div class="tabs">
+        <button type="button" class="tab active" data-tab="contrato">Contrato</button>
+        <button type="button" class="tab" data-tab="procuracao">Procuração</button>
+      </div>
+      <span class="preview-hint" id="previewHint">Preencha os campos ao lado — o documento é atualizado na hora.</span>
+    </div>
+    <div class="doc-scroll">
+      <div class="doc" id="docContrato"></div>
+      <div class="doc" id="docProc" hidden></div>
+    </div>
+  </section>
+</main>
+
+<div id="paginate" aria-hidden="true"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     ARTE ORIGINAL — cabeçalho e rodapé extraídos dos .docx
+     (word/media/image1.jpeg das páginas originais da DNA)
+     ============================================================ */
+  var HDR = "data:image/jpeg;base64,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";
+  var FTR = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABRAvsDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiik7UARt0pP1rA1PxZpGlS+VeXttby7d2yWXZVP8A4WN4eH/MStP/AAIWvInmeDhLknVj95tHDV5e9GB1GaMfSua/4WN4c/6DNn/3/FH/AAsfw3/0GLT/AL+io/tfBf8AP2P3lfVa/wDJI6r8qTn3rlv+FieGv+gxZ/8Af2j/AIWH4b/6DFn/AN/6X9r4H/n9H7x/Vq/8kvuOppK5f/hYPhr/AKDNl/3/AKb/AMLB8M/9Buy/7/LVf2rgf+fsfvF9Wr/yS+46fj1Wj8q5n/hZPhr/AKDVl/3/AEpP+FleG/8AoN2X/f8ASn/a2C/5+x+8f1Wv/JI6vmjmuT/4WJ4Y/wCg1Zf9/wBaP+FieGP+g1Zf9/1pf2lgv+fsfvD6rX/kl9x1O4+ooyf7wrl/+Fm+GP8AoN2f/f8ASj/hZvhj/oN2f/f9Kr+1MH/z9j94/qdf+SR1WT6Uu8+lcn/wsnwr/wBBuz/7/rR/wsvwr/0GrH/v+tP+08H/AM/Y/eH1Sv8AyS+46ve392jLf3a5T/hZfhX/AKDVl/3/AFpP+FneEv8AoOWP/f8AWn/aeD/5+x+8X1PEfyS+467n2o59q4//AIWn4V/6Dtl/39Wj/hafhX/oPWX/AH+Wl/aOD/5+x+8f1TE/8+5fcdfn/a/Sjn1/SuO/4Wl4W/6Dll/3/Wj/AIWl4W/6Dll/3/Wr/tDB/wDP2P3i+qYn/n3I7HPuPyoz7/pXG/8AC0vC3/Qcsf8Av+lL/wALT8K/9B+z/wC/6VX9oYT/AJ+x+8PqmJ/59SOyyfWjJ9a47/havhL/AKD9l/39Wk/4Wr4S/wCg9Y/9/lqf7Qwv/P2P3lfVMT/z6l9x2OfcflRn3H5Vx3/C1/CX/Qfsv+/6Uf8AC1/Cf/QwWX/f9aPr2G/5+R+8X1TE/wDPuX3HZYb1FHNcb/wtbwj/ANB+x/7/AC0f8LY8I/8AQfsP+/60fXsN/wA/I/eP6nif+fcvuOw+X3o+X3rjf+Ft+Ef+hgsf+/6Un/C2/CP/AEMNh/3/AEqvr+G/5+xF9TxP/PqR2mT6j8qM+4/KuK/4W54R/wChg0//AMCVpP8Ahb3hL/oY9P8A/AlKn69hv+fkfvD6pif+fUvuO3yPak3L6iuJ/wCFweEf+hisP/AlKP8Ahb/g/wD6GOw/8CUq/r2G/wCfkfvK+p4n/n1L7jtad+VcP/wuLwb/ANDDp3/gStH/AAt/wX/0MNh/3+Wl9bofzx+8PqWK/wCfcvuO8ooor0TjCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKTtQBCZcY96w/E3iW28PaXLdXDfKq/Kv95v7ta8zose9u1fP3xI8Vt4j1Ty4236fB8q7P8Alq396vieKM5jlOCk/ty+E9XLMFLGV+X7Jyesalc6vfS3Ny372dt3+5WU9WHqu9fyrVxOJrT9rL4pH7JQoUqMOSJXo+b3oo+b3pe0rnXyUw+b3ptO+b3ptX7SuHLTGPQ9D0PV+0rj5KYyj5veij5ver9pWK9nTG0yn0ytvaVh8lMZR83vRR83vWntKxfJSG0yn0ytfaVw5KYyh6KHrX2lYvkpjaZT6ZW0alYu1MZTadTav2lYv2dMY9Mp70ytuesX7OmD1FUr1FW3PVL5aYymvTqa9be0qhyUxj0ynvTK2vWK5KYPUT1K9RPW3PUH7OmMpr06mvW3vlezpjKZT6ZW37w09nSB6iqV6irdOoXGNI+hftM//PeX/vqj7TP/AM95f++qior+ij+WSX7TP/z3l/76o+0z/wDPeX/vqoqKAJftM/8Az3l/76o+0z/895f++qiooAl+0z/895f++qPtM/8Az3l/76qKigCX7TP/AM95f++qPtM//PeX/vqoqKAJftM//PeX/vqj7TP/AM95f++qiooAl+0z/wDPeX/vqj7TP/z3l/76qKigCX7TP/z3l/76o+0z/wDPeX/vqoqKAJftM/8Az3l/76o+0z/895f++qiooAl+0z/895f++qPtM/8Az3l/76qKigCX7TP/AM95f++qPtM//PeX/vqoqKAJftM//PeX/vqj7TP/AM95f++qiooAl+0z/wDPeX/vqj7TP/z3l/76qKigCX7TP/z3l/76o+0z/wDPeX/vqoqKAJftM/8Az3l/76o+0z/895f++qiooAl+0z/895f++qPtM/8Az3l/76qKigCX7TP/AM95f++qPtM//PeX/vqoqKAJftM//PeX/vqj7TP/AM95f++qiooAl+0z/wDPeX/vqj7TP/z3l/76qKigCX7TP/z3l/76o+0z/wDPeX/vqoqKAJftM/8Az3l/76o+0z/895f++qiooAl+0z/895f++qPtM/8Az3l/76qKigCX7TP/AM95f++qPtM//PeX/vqoqKAJftM//PeX/vqj7TP/AM95f++qiooAl+0z/wDPeX/vqj7TP/z3l/76qKigCX7TP/z3l/76o+0z/wDPeX/vqoqKAJftM/8Az3l/76o+0z/895f++qiooAl+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dR/wmC/8+zf990f8Jb/07P8A9/a5jD+oox7ir/1WwH8v4k/8RFzz+dfcJ83vR83vR83vR83vX1h+Vh83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAfN70fN70fN70fN70AHze9Hze9Hze9Hze9AB83vR83vR83vR83vQAq7qOhoIwa9a+A/wAOv+Ek1b+3L5d+mWTfukf/AJay/wD2FeBneb0sowM8TP7J9JkWUTznGww0PtGVZ/ATxfeWsU/2OBElXfsefY61Y/4Z78X/APPC0/7/ANfUVHze9fzVW8T805/cjH7j+mKPhdlfJ78n958u/wDDPPi//nhZ/wDf9KP+GefF/wDzws/+/wClfUXze9NrL/iJ2bf3fuOj/iF2T/zP7z5d/wCGfvF3/PCz/wC/6Un/AAoHxf8A88LT/v8ApX1A9D0f8ROzX+WP3C/4hZlH8z+8+X/+FA+LP+eFl/3/AFo/4UD4s/54Wn/f9a+naPm96v8A4iZmv8sfuL/4hZlHd/efL/8AwoXxZ/zwtP8AwJSj/hQniz/nhaf9/wCvp6mVt/xErNf7v3B/xCzKO8vvPmT/AIUL4t/54Wn/AH/Wmf8AChfFv/PC0/7/AK19N0fN70f8RIzby+4P+IWZR3f3nzL/AMKH8Wf88LP/AL+0f8KH8Vf88LT/AL+pX0xTKv8A4iRmv937jT/iFmUef3nzP/wovxV/zwsv+/60f8KL8Vf88LT/AL/rX0rQ9b/8RGzXy+4X/EKcn/mf3nzV/wAKJ8Vf8+9t/wB/1o/4Ub4q/wCeNt/3/r6TplV/xETNfIv/AIhTlH8z+8+b/wDhRvir/njbf9/6X/hSPij/AJ4Wf/f+voym1f8AxEPNPL7h/wDEKsm8/vPnH/hR/ij/AJ52n/f+j/hR/ij/AJ52n/f+vot6ZV/8RCzT+6X/AMQoyb+Znzr/AMKW8Uf88bT/AL+0n/ClvFP/ADytv+/6V9FvUVb/AOv+Y+X3B/xCfJv5n9589f8AClPEv/PK2/7/AKUz/hS3ib/njZ/9/wBK+haa9af6/wCY+X3F/wDEKMm/mZ8+f8KZ8S/88rb/AL/0f8Kc8R/88rb/AL/pX0A9Mpx48zH+6H/EKMm/mZ4F/wAKc8R/88rb/v8ApR/wpzxH/wA8rb/v+le+vUT1t/r1mP8Ad+4r/iE2S/zM8F/4U/4j/wCeVt/39o/4VF4j/wCeVp/3/Svd6a9af685j5fcH/EJ8m/mZ4P/AMKe8R/88rT/AL/pR/wqXxB/zytv+/617rTKr/XnMfL7jT/iEuTfzS+88K/4VR4h/wCeUH/f9KP+FS69/wA8rX/v7Xur1FV/675j/dD/AIhLk380vvPlyiiiv6DP4mCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAr64+Bn/JKdF/7a/+jXoor8k8Rv8AkUyP1zw2/wCRzA7iiiiv5DR/Y8gptFFYjGPQ9FFbRLGUUUV1DG0yiigBlFFFagNplFFM6BlD0UV1ANplFFEQGU2iiugsY9MoooNweoqKK7ImYymvRRWh1DHplFFKAA9RPRRXcixlNeiiugYymUUVpEYPUVFFNAf/2Q==";
+  var CONTATOS = ["(37) 9 9804-4360", "contato@dnaeletricamg.com.br", "dnaeletricamg.com.br"];
+
+  /* ============================================================
+     MODELOS — texto integral dos arquivos .docx originais
+     ============================================================ */
+  var MODELOS = {
+    contrato: [
+      {t:"title", s:[[false,"Contrato de Compra e Venda de Equipamentos e Mão de Obra de Instalação de Gerador Fotovoltaico, com Cláusula de Reserva de Domínio"]]},
+      {t:"sub", s:[[true,"IDENTIFICAÇÃO DAS PARTES CONTRATANTES"]]},
+      {t:"p", s:[[true,"VENDEDOR: DNA ELÉTRICA ENERGIA SOLAR LTDA"],[false,", pessoa jurídica de direito privado, inscrita no CNPJ sob n° 30.002.569/0001-57, com sede na Rua Isaurino do Vale, nº 225, Bairro Vila Tavares, em Itaúna-MG – CEP: 35680-071, neste ato legalmente representada pelo sócio Iheleno Ferreira da Silva Pinto, brasileiro, casado, empresário, inscrito no CPF sob nº 865.902.276-91 e portador do RG nº MG-7.513.691."]]},
+      {t:"p", s:[[true,"COMPRADOR: {{cli_nome}}"],[false,", portador(a) do {{doc_label}} de nº {{cli_doc}}, residente e domiciliado(a) na {{cli_logradouro}}, nº {{cli_numero}}{{cli_compl}}, Bairro {{cli_bairro}}, em {{cli_cidade}} – {{cli_uf}}, CEP: {{cli_cep}}."]]},
+      {t:"p", s:[[false,"As partes acima identificadas têm entre si justas e acertadas o presente contrato de compra e venda de equipamentos e mão de obra do gerador fotovoltaico, que se regerá pelas cláusulas seguintes e pelas condições descritas no presente."]]},
+      {t:"clause", s:[[false,"cláusula primeira – objeto do contrato"]]},
+      {t:"p", s:[[false,"O presente contrato de modalidade turn key tem como OBJETO, a prestação por parte do "],[true,"VENDEDOR"],[false," do fornecimento dos materiais e equipamentos discriminados na cláusula seguinte, a prestação de serviços de mão de obra de instalação do Gerador Fotovoltaico, elaboração do projeto elétrico fotovoltaico e a solicitação, em nome da "],[true,"CONTRATANTE"],[false,", de acesso junto à Concessionária de energia Cemig para conclusão da homologação (“Parecer de Acesso”) e efetiva instalação da usina fotovoltaica, necessários à implantação do sistema de geração de energia fotovoltaica (“UFV”)."]]},
+      {t:"p", s:[[false,"O endereço de instalação: {{inst_logradouro}}, nº {{inst_numero}}{{inst_compl}}, bairro {{inst_bairro}} em {{inst_cidade}} – {{inst_uf}}."]]},
+      {t:"clause", s:[[false,"cláusula segunda – equipamentos"]]},
+      {t:"p", s:[[false,"O sistema com potência de "],[true,"{{potencia_kwp}}"],[false,", é composto pelos materiais relacionados na planilha abaixo:"]]},
+      {t:"table_equip", s:[]},
+      {t:"p", s:[[true,"Ressalvamos que, na entrega dos equipamentos, caso não esteja disponível o painel fotovoltaico da potência e/ou marca mencionada acima, o mesmo será trocado, porém mantendo a potência pico do sistema. Cabeamento CA incluso na proposta com até 15 metros de distância do ponto de conexão."]]},
+      {t:"clause", s:[[false,"Cláusula terceira – preço"]]},
+      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," pagará ao "],[true,"VENDEDOR"],[false,", pela compra do kit fotovoltaico e execução do projeto, objeto deste contrato, o valor de "],[true,"{{valor_total}}"],[false,". O pagamento será efetuado conforme as condições descriminadas abaixo:"]]},
+      {t:"table_pag", s:[]},
+      {t:"obs", s:[]},
+      {t:"p", s:[[false,"Os pagamentos serão efetuados através de boletos bancários, transferência bancária ou cheques e somente serão considerados válidos após a efetiva compensação e crédito na conta do "],[true,"VENDEDOR"],[false,"."]]},
+      {t:"p", s:[[false,"As partes estabelecem neste instrumento a reserva de domínio sobre os bens adquiridos, pela qual fica reservado ao "],[true,"VENDEDOR"],[false," o direito de propriedade dos bens objeto deste contrato, até a total liquidação das parcelas estabelecidas pelas partes para o pagamento do preço."]]},
+      {t:"clause", s:[[false,"cláusula quarta – obrigações do comprador"]]},
+      {t:"p", s:[[false,"Será de total responsabilidade do "],[true,"COMPRADOR"],[false," qualquer obra civil necessária para a execução do projeto, tais como: adequação da infraestrutura da rede elétrica interna do imóvel, troca do quadro de distribuição ou do quadro do medidor externo da concessionária Cemig, obras civis no telhado, obras civis na estrutura do telhado e qualquer obra civil desta natureza."]]},
+      {t:"p", s:[[false,"Caberá ao "],[true,"COMPRADOR"],[false," a elaboração prévia de laudo estrutural para aferição do peso suportado pelo equipamento a ser instalado, sendo que o mesmo poderá dispensar a sua realização, assumindo toda responsabilidade e risco pela estrutura existente."]]},
+      {t:"p", s:[[false,"Cabe ao "],[true,"COMPRADOR"],[false," comunicar antecipadamente ao "],[true,"VENDEDOR"],[false," da necessidade de qualquer obra civil dentre as mencionadas acima ou outra que sejam necessárias e que não estão descritas neste contrato."]]},
+      {t:"p", s:[[false,"Compete ao "],[true,"COMPRADOR"],[false," promover a manutenção periódica dos equipamentos que compõem o gerador fotovoltaico."]]},
+      {t:"clause", s:[[false,"cláusula quinta – obrigações do vendedor"]]},
+      {t:"p", s:[[false,"Cabe ao "],[true,"VENDEDOR"],[false," a elaboração do projeto elétrico, bem como a solicitação de acesso à rede junto à Concessionária de Energia Cemig."]]},
+      {t:"p", s:[[false,"Para que o "],[true,"VENDEDOR"],[false," possa realizar as consultas preliminares e realizar as solicitações à concessionária o "],[true,"COMPRADOR"],[false," se compromete a outorgar procuração atuação em seu nome nesta finalidade específica."]]},
+      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," se compromete a instalar todos os equipamentos descritos neste contrato dentro do prazo de 120 dias a contar do pagamento da entrada do preço convencionado, salientando, porém, que a efetiva geração de energia em favor do adquirente depende da homologação do sistema que é de total responsabilidade da concessionária CEMIG conforme clausula descrita nesse contrato."]]},
+      {t:"p", s:[[false,"O prazo de entrega poderá ser prorrogado mediante a ocorrência de Caso fortuito, força maior ou dificuldades de acesso ao imóvel, surgimento de imprevistos técnicos que impliquem na paralisação dos trabalhos ou na necessidade de substituição de materiais, descumprimento no prazo de fornecimento dos equipamentos por motivo de terceiros e não imputáveis ao "],[true,"VENDEDOR"],[false,", alteração do projeto por parte do "],[true,"COMPRADOR"],[false,"."]]},
+      {t:"p", s:[[false,"Utilizar equipamentos adequados à realização dos serviços e pessoal qualificado, assumindo plena e exclusiva responsabilidade por sua contratação, eximindo o "],[true,"COMPRADOR"],[false," de qualquer responsabilidade."]]},
+      {t:"clause", s:[[false,"CLÁUSULA SEXTA – HOMOLOGAÇÃO DA CONCESSIONÁRIA"]]},
+      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," declara expressamente que tem ciência de que a efetiva geração de energia e utilização pelo "],[true,"COMPRADOR"],[false," está condicionada à homologação pela "],[true,"CONCESSIONÁRIA DE ENERGIA CEMIG"],[false,", obedecendo aos prazos estabelecidos na resolução nº 482/2012 da ANEEL."]]},
+      {t:"p", s:[[false,"Na hipótese de atraso ou caso a Concessionária Cemig não cumpra com os prazos previstos na resolução acima citada, não cabe qualquer responsabilidade deste atraso ao "],[true,"VENDEDOR"],[false,", bem como não é devido por este ao "],[true,"COMPRADOR"],[false," qualquer forma de indenização, compensação, ressarcimento ou reembolso em decorrência deste atraso e da emissão de contas e faturas de consumo."]]},
+      {t:"clause", s:[[false,"CLÁUSULA SÉTIMA – GARANTIAS DO PRODUTO E ORIENTAÇÕES DE USO"]]},
+      {t:"p", s:[[false,"Os materiais tem garantia contra defeitos de fabricação e eficiência concedidas pelo "],[true,"“FABRICANTE DO MATERIAL/FORNECEDOR"],[false,"” conforme descriminado abaixo:"]]},
+      {t:"li", s:[[false,"Painel Fotovoltaico: 10 anos"]]},
+      {t:"li", s:[[false,"Inversor: 5 anos"]]},
+      {t:"li", s:[[false,"String Box e Conectores: 6 meses"]]},
+      {t:"li", s:[[false,"Estrutura: 6 meses"]]},
+      {t:"li", s:[[false,"Mão de Obra de instalação: 6 meses"]]},
+      {t:"p", s:[[false,"O fabricante dos painéis fotovoltaicos garante a eficiência dos mesmos pelo prazo de 25 anos de utilização com 80% de geração."]]},
+      {t:"p", s:[[false,"Cabe ao "],[true,"VENDEDOR"],[false," fazer a reposição ou conserto do equipamento que apresentar qualquer defeito de fabricação detectadas em vistoria por ele realizada, assim como realizar o contato junto ao "],[true,"FABRICANTE/FORNECEDOR"],[false," para resolução do caso."]]},
+      {t:"p", s:[[false,"Não cabe ao "],[true,"VENDEDOR"],[false," qualquer indenização ou ressarcimento financeiro ao "],[true,"COMPRADOR"],[false," durante o período de reposição ou conserto do equipamento."]]},
+      {t:"p", s:[[true,"A presente garantia não cobre defeitos ou falhas decorrentes do desgaste normal dos materiais e componentes, erros operacionais, erros de manutenção ou de sua falta, manuseio inadequado dos acessórios ou dos equipamentos, equipamentos mantidos inoperantes por período superior a 30 (trinta) dias, sem que seja observada a sua manutenção ou, ainda, danos ou defeitos causados por erosão, corrosão, intempéries, etc."]]},
+      {t:"p", s:[[false,"A garantia torna-se nula sempre que houver a violação de qualquer tipo de lacre de instalação dos equipamentos fornecidos pelo "],[true,"VENDEDOR."]]},
+      {t:"p", s:[[false,"O "],[true,"VENDEDOR "],[false,"não será responsável por quaisquer custos ou prejuízos decorrentes de modificações, remoção, instalação, reinstalação ou substituição de equipamentos, componentes, partes ou acessórios, realizadas pelo "],[true,"COMPRADOR "],[false,"ou por terceiros sem o prévio e expresso consentimento seu por escrito, sendo que a inobservância deste item acarreta a anulação e invalidade da garantia."]]},
+      {t:"clause", s:[[false,"CLÁUSULA OITAVA – ORIENTAÇÕES SOBRE UTILIZAÇÃO E MANUTENÇÃO"]]},
+      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," declara haver recebido todos os manuais e orientação para correta utilização do equipamento."]]},
+      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," orienta e sugere ao "],[true,"COMPRADOR"],[false," a contratar um seguro especifico contra danos causados por forças da natureza (tempestades, furacões, vendavais, etc.) visto que os danos no equipamento decorrentes destes eventos não são contemplados ou cobertos por qualquer tipo de garantia."]]},
+      {t:"p", s:[[false," O "],[true,"VENDEDOR"],[false," orienta o "],[true,"COMPRADOR"],[false," a fazer a manutenção do gerador fotovoltaico a cada 2 meses, afim de manter o funcionamento do mesmo em ALTA PERFORMANCE."]]},
+      {t:"clause", s:[[false,"CLÁUSULA NONA – DA RESCISÃO E INADIMPLEMENTO"]]},
+      {t:"p", s:[[false,"Este contrato poderá ser rescindido no caso de inadimplemento de quaisquer obrigações ora estabelecidas, independentemente de notificação, ou, ainda, no caso de inexecução total    ou parcial deste contrato."]]},
+      {t:"p", s:[[false,"A parte infratora ficará obrigada a pagar a multa equivalente a 20% (vinte por cento) sobre o valor total do contrato à outra parte, sem prejuízo das perdas e danos que a referida infração acarretar."]]},
+      {t:"p", s:[[false,"Para o caso de rescisão por inadimplência no pagamento de uma ou mais parcelas, além das perdas, danos e lucros cessantes acima, arcará o "],[true,"COMPRADOR "],[false,"com o pagamento dos juros à taxa de 1% ao mês, da correção monetária pelo índice do IGPM ou outro que vier a substituí-lo, bem como da multa de 2%."]]},
+      {t:"p", s:[[false,"Eventual rescisão unilateral pelo "],[true,"COMPRADOR"],[false,", excluída a hipótese acima, deverá ser feita mediante aviso prévio (por escrito) e desde que ocorra antes da aquisição dos materiais previstos, arcando, nesta hipótese, com o pagamento da multa de 10% (dez por cento) do valor do contrato."]]},
+      {t:"p", s:[[false,"Após o adimplimento das obrigações assumidas pelo "],[true,"VENDEDOR"],[false," e, em não ocorrendo o pagamento das prestações, por parte do "],[true,"COMPRADOR"],[false,", nos prazos estipulados, haverá o vencimento imediato das demais parcelas vincendas, podendo o "],[true,"VENDEDOR"],[false," promover, independentemente de interpelação judicial ou extrajudicial, aviso ou notificação, a rescisão deste instrumento, cabendo ao "],[true,"VENDEDOR"],[false," a escolha de promover à execução judicial do contrato ou, caso assim queira, requerer a apreensão e depósito judicial dos bens móveis, para devolução, em virtude da "],[false,"cláusula pactum reservati dominii"],[false,", onde somente será devolvido algum valor ao "],[true,"COMPRADOR"],[false,", na hipótese de existência de saldo remanescente, apurado após o desconto das multas alhures previstas, das despesas suportadas pelo "],[true,"VENDEDOR"],[false," para a aquisição e instalação do objeto do contrato e, ainda, da depreciação dos bens móveis, a qual fica fixada, desde já, em 20% (vinte por cento) ao ano."]]},
+      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," poderá rescindir este contrato, de pleno direito, independentemente de qualquer notificação, interpelação judicial ou extrajudicial, se o "],[true,"COMPRADOR"],[false," entrar em estado de insolvência ou se lhe for decretada a falência por qualquer dívida que tenha contraído fora deste instrumento."]]},
+      {t:"p", s:[[false,"A rescisão poderá ocorrer, ainda, por mútuo acordo entre as partes e a qualquer tempo por fato imprevisível e de força maior, caso em que não haverá encargo algum a nenhuma delas."]]},
+      {t:"p", s:[[false,"Em confirmada a rescisão deste contrato, o "],[true,"COMPRADOR"],[false," fica obrigado a restituir o objeto deste contrato ao "],[true,"VENDEDOR"],[false,", em bom estado de conservação, salvo o desgaste natural pelo uso."]]},
+      {t:"p", s:[[false,"Não poderá o "],[true,"COMPRADOR"],[false," ceder o bem, objeto do contrato, a terceiro, sem a devida anuência do "],[true,"VENDEDOR"],[false,", nem constituir, direta ou indiretamente, ônus, penhor, caução ou qualquer outro gravame sobre mesmo, até que sejam quitadas todas as parcelas previstas neste contrato."]]},
+      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," possui o direito de pleitear qualquer medida protetora do domínio do objeto deste instrumento, bem como se proteger contra qualquer ato que o impeça de exercer tal direito."]]},
+      {t:"p", s:[[false,"Na hipótese de rescisão por iniciativa ou culpa do "],[true,"COMPRADOR"],[false," serão devidos honorários advocatícios, no importe de 20% (vinte por cento) do valor total do débito, na hipótese de procedimentos de cobrança administrativa ou judicial."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA – DA CONSERVAÇÃO E USO DO BEM"]]},
+      {t:"p", s:[[false,"Enquanto não forem pagas todas as parcelas, o "],[true,"COMPRADOR"],[false," obrigar-se-á por zelar pela conservação dos bens objeto do presente contrato, providenciando todos os recursos necessários à manutenção do mesmo, correndo todos os custos por sua conta, devendo cuidar também da aparência e do bom funcionamento do mesmo, sendo-lhe impedido alterar a estrutura onde foram instalados os bens, de modo que não desvirtue seu uso e altere suas características."]]},
+      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," será responsável, enquanto existirem parcelas e valores a serem adimplidos, ou seja, durante a vigência da cláusula de reserva de domínio, pelo perecimento dos bens objeto do presente contrato, ainda que o perecimento ocorra em virtude de caso fortuito ou força maior."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA PRIMEIRA – USO DE IMAGEM"]]},
+      {t:"p", s:[[false,"(   ) Autorizo"]]},
+      {t:"p", s:[[false,"(   ) Não autorizo"]]},
+      {t:"p", s:[[false,"O "],[true,"COMPRADOR "],[false,"assinala no parêntese acima, de próprio punho, a autorização ou não do uso da sua imagem pessoal ou do imóvel, objeto do local de instalação constante neste contrato, concedida por período indeterminado ao "],[true,"VENDEDOR"],[false,", de forma gratuita."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA SEGUNDA – CONFIDENCIALIDADE"]]},
+      {t:"p", s:[[false,"As partes, por si e por seus dirigentes, prepostos ou empregados, comprometem-se, mesmo após o término do presente contrato, a manter completa confidencialidade e sigilo sobre as condições deste contrato, reconhecendo que não poderão ser divulgados ou fornecidos a terceiros, salvo com expressa autorização, por escrito, da outra parte."]]},
+      {t:"p", s:[[false,"12.2. As partes serão responsáveis, civil e criminalmente, inclusive, pela inobservância da LGPD, por quaisquer danos causados uma a outra e/ou terceiros em virtude da quebra da confidencialidade e sigilo a que estão obrigadas, além de configurar infração contratual."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA TERCEIRA – FORO"]]},
+      {t:"p", s:[[false,"Para dirimir quaisquer controvérsias oriundas do CONTRATO, as partes elegem o foro da comarca de {{foro_comarca}}."]]},
+      {t:"p", s:[[false,"Por estarem assim justos e contratados, firmam o presente instrumento, em duas vias de igual teor e forma."]]},
+      {t:"p", s:[[false,"{{assinatura_local}}, {{data_extenso}}."]]},
+      {t:"sig2", s:[[true,"DNA ELÉTRICA ENERGIA SOLAR LTDA"],[true,"{{cli_nome}}"]]}
+    ],
+    procuracao: [
+      {t:"title2", s:[[true,"PROCURAÇÃO"]]},
+      {t:"p", s:[[true,"OUTORGANTE: {{cli_nome}}"],[false,", portador do CPF ou CNPJ de n° {{cli_doc}}, domiciliado na {{cli_logradouro}}, {{cli_numero}}{{cli_compl}}, bairro {{cli_bairro}}, na cidade de {{cli_cidade}}, CEP: {{cli_cep}}."]]},
+      {t:"p", s:[[false,"O presente instrumento particular de mandato, nomeia e constitui como seu bastante procurador:"]]},
+      {t:"p", s:[[true,"OUTORGADO: WILLY AMORIM MAGALHÃES,"],[false," brasileiro, casado, RG: MG 15.544.401, CPF: 096.425.246-51, CREA 333371-MG conferindo-lhe:"]]},
+      {t:"p", s:[[true,"PODER:"],[false," realizar todos os procedimentos e atos necessários para obter o cadastro do estabelecimento/residência do Outorgante, proceder eventuais reclamações formais junto à distribuidora, ouvidoria e/ou ANEEL, realizar transferências de titularidade de contas, assim como solicitar o acesso para efetivar a "],[true,"Geração Distribuída"],[false," com "],[true,"fonte solar fotovoltaica"],[false,", regulamentada pela Resolução Normativa (REN) — REN 482 de 17/04/2012 da ANEEL, com revisões dadas pela REN 517 de 11/12/2012 e REN 687 de 24/11/2015."]]},
+      {t:"p", s:[[true,"OBJETIVO:"],[false," todos os poderes especificados nesta procuração destinam-se "],[true,"exclusivamente e especificamente"],[false," à defesa dos interesses do Outorgante junto esta distribuidora."]]},
+      {t:"p", s:[[true,"VALIDADE:"],[false," 360 dias após assinatura."]]},
+      {t:"center", s:[[false,"{{assinatura_local}}, {{data_extenso}}"]]},
+      {t:"sig1", s:[[true,"{{cli_nome}}"]]}
+    ]
+  };
+
+  /* ================= estado ================= */
+  var $ = function (id) { return document.getElementById(id); };
+  var STATE_KEY = "dna-gerador-v3";
+  var PAGE_H = 829;
+  var FORMAS = ["À vista","Boleto","PIX","Transferência bancária","Cartão de crédito","Cartão de débito","Financiamento","Cheque","Permuta"];
+  var ORD = ["UM","DOIS","TRÊS","QUATRO","CINCO","SEIS","SETE","OITO","NOVE","DEZ"];
+
+  var DEFAULTS = {
+    cliNome:"", cliDoc:"", cliCep:"", cliLogradouro:"", cliNumero:"", cliCompl:"",
+    cliBairro:"", cliCidade:"", cliUf:"", instDiff:false,
+    instCep:"", instLogradouro:"", instNumero:"", instCompl:"", instBairro:"", instCidade:"", instUf:"",
+    invMarca:"", invPot:"", invQtd:"", painelMarca:"", painelWp:"", painelQtd:"", estrutura:"",
+    valorTotal:"", obsOn:false, obs:"",
+    assinaturaLocal:"Itaúna", foroComarca:"ITAÚNA - MG", dataAssinatura:"",
+    pags:[{forma:"", desc:"", valor:""}]
+  };
+  var S = JSON.parse(JSON.stringify(DEFAULTS));
+
+  /* ================= helpers ================= */
+  function esc(v) {
+    return String(v == null ? "" : v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+  function digits(v) { return String(v || "").replace(/\D+/g, ""); }
+  function maskDoc(v) {
+    var d = digits(v).slice(0, 14);
+    if (d.length <= 11) {
+      return d.replace(/^(\d{3})(\d)/, "$1.$2")
+              .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+              .replace(/\.(\d{3})(\d{1,2})$/, ".$1-$2");
+    }
+    return d.replace(/^(\d{2})(\d)/, "$1.$2")
+            .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+            .replace(/\.(\d{3})(\d)/, ".$1/$2")
+            .replace(/(\d{4})(\d{1,2})$/, "$1-$2");
+  }
+  function maskCep(v) {
+    var d = digits(v).slice(0, 8);
+    return d.length > 5 ? d.slice(0,5) + "-" + d.slice(5) : d;
+  }
+  function num(v) {
+    if (v == null || v === "") return 0;
+    var s = String(v).replace(/[^\d,.-]/g, "");
+    if (s.indexOf(",") > -1) s = s.replace(/\./g, "").replace(",", ".");
+    var n = parseFloat(s);
+    return isFinite(n) ? n : 0;
+  }
+  function brl(n) {
+    return "R$ " + (n || 0).toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  function maskMoney(input) {
+    var d = digits(input.value).slice(0, 11);
+    input.value = d ? brl(parseInt(d, 10) / 100) : "";
+  }
+  function dec(v, casas) {
+    var n = num(v);
+    if (!n) return "";
+    return n.toLocaleString("pt-BR", {minimumFractionDigits: casas, maximumFractionDigits: casas});
+  }
+  var MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+  function dataExtenso(d) { return d.getDate() + " de " + MESES[d.getMonth()] + " de " + d.getFullYear(); }
+  function toast(msg, isErr) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.toggle("err", !!isErr);
+    t.classList.add("show");
+    clearTimeout(toast._h);
+    toast._h = setTimeout(function () { t.classList.remove("show"); }, isErr ? 4400 : 2600);
+  }
+
+  /* ================= cálculos ================= */
+  function potenciaKwp() { return (num(S.painelWp) * num(S.painelQtd)) / 1000; }
+
+  function pagamentos() {
+    var total = num(S.valorTotal);
+    var rows = (S.pags || []).map(function (p) {
+      return {forma:p.forma || "", desc:p.desc || "", valor: p.valor ? num(p.valor) : null};
+    });
+    var blanks = [];
+    rows.forEach(function (r, i) { if (r.valor === null) blanks.push(i); });
+    var fixos = rows.reduce(function (a, r) { return a + (r.valor || 0); }, 0);
+    var resto = Math.max(total - fixos, 0);
+    if (blanks.length === 1) {
+      rows[blanks[0]].valor = resto;
+    } else if (blanks.length > 1) {
+      var per = Math.floor((resto / blanks.length) * 100) / 100;
+      var acum = 0;
+      blanks.forEach(function (idx, k) {
+        var v = (k === blanks.length - 1) ? Math.round((resto - acum) * 100) / 100 : per;
+        rows[idx].valor = v;
+        acum += v;
+      });
+    }
+    return rows;
+  }
+  function somaPag() { return pagamentos().reduce(function (a, r) { return a + (r.valor || 0); }, 0); }
+
+  function valores() {
+    var kwp = potenciaKwp();
+    var d = !!S.instDiff;
+    return {
+      cli_nome: (S.cliNome || "").trim().toUpperCase(),
+      cli_doc: S.cliDoc || "—",
+      doc_label: digits(S.cliDoc).length > 11 ? "CNPJ" : "CPF",
+      cli_logradouro: S.cliLogradouro || "—",
+      cli_numero: S.cliNumero || "—",
+      cli_compl: S.cliCompl ? " " + S.cliCompl : "",
+      cli_bairro: S.cliBairro || "—",
+      cli_cidade: S.cliCidade || "—",
+      cli_uf: S.cliUf || "—",
+      cli_cep: S.cliCep || "—",
+      inst_logradouro: d ? (S.instLogradouro || "—") : (S.cliLogradouro || "—"),
+      inst_numero: d ? (S.instNumero || "—") : (S.cliNumero || "—"),
+      inst_compl: d ? (S.instCompl ? " " + S.instCompl : "") : (S.cliCompl ? " " + S.cliCompl : ""),
+      inst_bairro: d ? (S.instBairro || "—") : (S.cliBairro || "—"),
+      inst_cidade: d ? (S.instCidade || "—") : (S.cliCidade || "—"),
+      inst_uf: d ? (S.instUf || "—") : (S.cliUf || "—"),
+      potencia_kwp: kwp ? dec(kwp, 2) + " kWp" : "— kWp",
+      valor_total: num(S.valorTotal) ? brl(num(S.valorTotal)) : "R$ —",
+      foro_comarca: (S.foroComarca || "—").toUpperCase(),
+      assinatura_local: S.assinaturaLocal || "—",
+      data_extenso: S.dataAssinatura || dataExtenso(new Date())
+    };
+  }
+
+  /* ================= blocos ================= */
+  function rico(segs, V) {
+    return segs.map(function (s) {
+      var txt = esc(s[1]).replace(/\{\{(\w+)\}\}/g, function (m, k) { return esc(V[k] != null ? V[k] : m); });
+      return s[0] ? "<strong>" + txt + "</strong>" : txt;
+    }).join("");
+  }
+
+  function tabelaEquip() {
+    var inv = "INVERSOR " + (S.invMarca || "").toUpperCase() + "  " + (num(S.invPot) ? dec(num(S.invPot), num(S.invPot) % 1 ? 1 : 0) + " kW" : "");
+    var pai = "PAINEL FOTOVOLTAICO " + (S.painelMarca || "").toUpperCase() + "  " + (num(S.painelWp) ? dec(num(S.painelWp), 0) + " Wp" : "");
+    var est = "ESTRUTURA " + (S.estrutura || "").toUpperCase();
+    var rows = [
+      [inv.replace(/\s+/g, " ").trim(), String(num(S.invQtd) || 1)],
+      [pai.replace(/\s+/g, " ").trim(), String(num(S.painelQtd) || 1)],
+      [est.replace(/\s+/g, " ").trim(), "incluso"],
+      ["QUADRO GERAL DE PROTEÇÃO + CABOS ELÉTRICOS E CONECTORES", "incluso"],
+      ["PROJETO ELÉTRICO + MÃO DE OBRA DE INSTALAÇÃO", "incluso"]
+    ];
+    var h = '<table class="t-equip"><thead><tr><th>Descrição do item</th><th class="qt">Quantidade</th></tr></thead><tbody>';
+    rows.forEach(function (r) { h += "<tr><td>" + esc(r[0]) + '</td><td class="qt">' + esc(r[1]) + "</td></tr>"; });
+    return h + "</tbody></table>";
+  }
+
+  function tabelaPag() {
+    var rows = pagamentos();
+    var h = '<table class="t-pag"><thead><tr><th class="c">Nº</th><th>Data de Vencimento ou Forma de Pagamento</th><th class="r">Valor</th></tr></thead><tbody>';
+    rows.forEach(function (r, i) {
+      var cell = (r.forma.toUpperCase() + (r.desc ? " " + r.desc : "")).trim() || "—";
+      h += '<tr><td class="c">' + esc(ORD[i] || String(i + 1)) + "</td><td>" + esc(cell) +
+           '</td><td class="r">' + esc(r.valor ? brl(r.valor) : "—") + "</td></tr>";
+    });
+    return h + "</tbody></table>";
+  }
+
+  function blocoAssinatura(nomes) {
+    var h = '<div class="sigwrap">';
+    nomes.forEach(function (n, i) {
+      h += '<div style="margin-top:' + (i === 0 ? "0" : "30pt") + '"><div class="sigline">' + n + "</div></div>";
+    });
+    return h + "</div>";
+  }
+
+  function blocoHTML(b, V) {
+    switch (b.t) {
+      case "title":  return '<h1 class="title">' + rico(b.s, V) + "</h1>";
+      case "title2": return '<h1 class="title big">' + rico(b.s, V) + "</h1>";
+      case "sub":    return '<p class="sub">' + rico(b.s, V) + "</p>";
+      case "clause": return '<h2 class="clause">' + rico(b.s, V) + "</h2>";
+      case "li":     return '<p class="li">' + rico(b.s, V) + "</p>";
+      case "center": return '<p class="center">' + rico(b.s, V) + "</p>";
+      case "p":      return "<p>" + rico(b.s, V) + "</p>";
+      case "table_equip": return tabelaEquip();
+      case "table_pag":   return tabelaPag();
+      case "obs":
+        if (S.obsOn && S.obs && S.obs.trim()) {
+          return '<div class="obs"><div class="obs-t">OBSERVAÇÃO</div>' + esc(S.obs.trim()).replace(/\n+/g, "<br>") + "</div>";
+        }
+        return "";
+      case "sig1": return blocoAssinatura([rico(b.s, V)]);
+      case "sig2": return blocoAssinatura([rico([b.s[0]], V), rico([b.s[1]], V)]);
+    }
+    return "";
+  }
+
+  /* ================= cabeçalho / rodapé ================= */
+  function arteHTML() {
+    var ctt = CONTATOS.map(function (c) { return "<span>" + esc(c) + "</span>"; }).join("");
+    return '<div class="hf-top"><img src="' + HDR + '" alt="" width="794" height="183">' +
+           '<div class="ctt">' + ctt + "</div></div>" +
+           '<div class="hf-bot"><img src="' + FTR + '" alt="" width="794" height="84"></div>';
+  }
+
+  /* ================= paginação A4 ================= */
+  function paginar(modelo, V, tipo) {
+    var meas = document.createElement("div");
+    meas.className = "sheet" + (tipo === "procuracao" ? " proc" : "");
+    meas.style.cssText = "position:absolute;left:-11000px;top:0;height:auto;overflow:visible;box-shadow:none;visibility:hidden";
+    var flow = document.createElement("div");
+    flow.className = "flow";
+    flow.style.cssText = "position:static;width:605px;height:auto;overflow:visible";
+    meas.appendChild(flow);
+    document.body.appendChild(meas);
+
+    var wrappers = [];
+    MODELOS[tipo].forEach(function (b) {
+      var html = blocoHTML(b, valores());
+      if (!html) return;
+      var w = document.createElement("div");
+      w.className = "blk";
+      w.innerHTML = html;
+      flow.appendChild(w);
+      /* assinatura nunca fica sozinha: gruda no bloco anterior (data/local) */
+      if ((b.t === "sig1" || b.t === "sig2") && wrappers.length) {
+        wrappers[wrappers.length - 1].appendChild(w);
+      } else {
+        wrappers.push(w);
+      }
+    });
+    var heights = wrappers.map(function (w) { return w.getBoundingClientRect().height; });
+    var blocks = wrappers.map(function (w) { return w.innerHTML; });
+    document.body.removeChild(meas);
+
+    var pages = [], cur = [], acc = 0;
+    for (var i = 0; i < heights.length; i++) {
+      var h = heights[i];
+      if (cur.length && acc + h > PAGE_H) { pages.push(cur); cur = []; acc = 0; }
+      cur.push(blocks[i]);
+      acc += h;
+    }
+    if (cur.length) pages.push(cur);
+
+    var frag = document.createDocumentFragment();
+    pages.forEach(function (blocks) {
+      var sh = document.createElement("div");
+      sh.className = "sheet" + (tipo === "procuracao" ? " proc" : "");
+      sh.innerHTML = arteHTML() + '<div class="flow">' + blocks.join("") + "</div>";
+      frag.appendChild(sh);
+    });
+    return frag;
+  }
+
+  function render() {
+    var V = valores();
+    $("docContrato").innerHTML = "";
+    $("docProc").innerHTML = "";
+    $("docContrato").appendChild(paginar(MODELOS.contrato, V, "contrato"));
+    $("docProc").appendChild(paginar(MODELOS.procuracao, V, "procuracao"));
+
+    $("kwpOut").textContent = potenciaKwp() ? dec(potenciaKwp(), 2) + " kWp" : "— kWp";
+    $("kwpCalc").textContent = (num(S.painelWp) ? dec(num(S.painelWp), 0) : "—") + " Wp × " +
+      (num(S.painelQtd) ? dec(num(S.painelQtd), 0) : "—") + " painéis";
+    $("tagTipoPessoa").textContent = digits(S.cliDoc).length > 11 ? "PJ" : "PF";
+    $("pagTotal").textContent = brl(somaPag());
+    marcarPreenchidos();
+    atualizarStatus();
+    atualizarPlaceholders();
+  }
+
+  /* ================= validação ================= */
+  function regrasValidacao() {
+    var r = [
+      {id:"cliNome",          ok:function(){ return !!S.cliNome.trim(); },                     nome:"Nome completo / Razão social"},
+      {id:"cliDoc",           ok:function(){ var d=digits(S.cliDoc); return d.length===11||d.length===14; }, nome:"CPF ou CNPJ"},
+      {id:"cliCep",           ok:function(){ return digits(S.cliCep).length===8; },            nome:"CEP"},
+      {id:"cliLogradouro",    ok:function(){ return !!S.cliLogradouro.trim(); },               nome:"Rua / Logradouro"},
+      {id:"cliNumero",        ok:function(){ return !!S.cliNumero.trim(); },                   nome:"Número"},
+      {id:"cliBairro",        ok:function(){ return !!S.cliBairro.trim(); },                   nome:"Bairro"},
+      {id:"cliCidade",        ok:function(){ return !!S.cliCidade.trim(); },                   nome:"Cidade"},
+      {id:"cliUf",            ok:function(){ return String(S.cliUf).length===2; },             nome:"UF"},
+      {id:"invMarca",         ok:function(){ return !!S.invMarca.trim(); },                    nome:"Marca do inversor"},
+      {id:"invPot",           ok:function(){ return num(S.invPot)>0; },                        nome:"Potência do inversor"},
+      {id:"invQtd",           ok:function(){ return num(S.invQtd)>0; },                        nome:"Qtd. de inversores"},
+      {id:"painelMarca",      ok:function(){ return !!S.painelMarca.trim(); },                 nome:"Marca do painel"},
+      {id:"painelWp",         ok:function(){ return num(S.painelWp)>0; },                      nome:"Potência do painel"},
+      {id:"painelQtd",        ok:function(){ return num(S.painelQtd)>0; },                     nome:"Qtd. de painéis"},
+      {id:"valorTotal",       ok:function(){ return num(S.valorTotal)>0; },                    nome:"Valor total"},
+      {pag:true,              ok:function(){ return S.pags.length>0 && S.pags.every(function(p){return !!p.forma;}); }, nome:"Forma de pagamento"},
+      {id:"obs", cond:function(){ return !!S.obsOn; }, ok:function(){ return !!(S.obs||"").trim(); }, nome:"Texto da observação"},
+      {id:"assinaturaLocal",  ok:function(){ return !!S.assinaturaLocal.trim(); },             nome:"Local"},
+      {id:"foroComarca",      ok:function(){ return !!S.foroComarca.trim(); },                 nome:"Foro da comarca"},
+      {id:"dataAssinatura",   ok:function(){ return !!S.dataAssinatura.trim(); },              nome:"Data por extenso"}
+    ];
+    if (S.instDiff) {
+      var inst = [
+        {id:"instLogradouro", ok:function(){ return !!S.instLogradouro.trim(); }, nome:"Rua da instalação"},
+        {id:"instNumero",     ok:function(){ return !!S.instNumero.trim(); },     nome:"Número da instalação"},
+        {id:"instBairro",     ok:function(){ return !!S.instBairro.trim(); },     nome:"Bairro da instalação"},
+        {id:"instCidade",     ok:function(){ return !!S.instCidade.trim(); },     nome:"Cidade da instalação"},
+        {id:"instUf",         ok:function(){ return String(S.instUf).length===2; }, nome:"UF da instalação"}
+      ];
+      r = r.slice(0, 8).concat(inst).concat(r.slice(8));
+    }
+    return r.filter(function (x) { return !x.cond || x.cond(); });
+  }
+
+  function pendentes() {
+    return regrasValidacao().filter(function (r) { return !r.ok(); });
+  }
+
+  function validar(mostrar) {
+    var pend = pendentes();
+    if (mostrar) {
+      document.querySelectorAll(".invalid").forEach(function (e) { e.classList.remove("invalid"); });
+      pend.forEach(function (r) {
+        if (r.pag) {
+          document.querySelectorAll(".pag-row select").forEach(function (s) {
+            if (!s.value) s.classList.add("invalid");
+          });
+        } else if (r.id && $(r.id)) {
+          $(r.id).classList.add("invalid");
+        }
+      });
+    }
+    return pend;
+  }
+
+  function marcarPreenchidos() {
+    document.querySelectorAll("input.i, textarea.i").forEach(function (el) {
+      var v = (el.value || "").trim();
+      if (el.id === "cliDoc") v = digits(v);
+      if (el.id === "cliCep" || el.id === "instCep") v = digits(v);
+      el.classList.toggle("filled", v.length > 0);
+    });
+  }
+
+  function atualizarPlaceholders() {
+    var rows = pagamentos();
+    document.querySelectorAll(".pag-row").forEach(function (row, i) {
+      var inp = row.querySelector('input[data-k="valor"]');
+      if (inp && rows[i] && !S.pags[i].valor) inp.placeholder = rows[i].valor ? brl(rows[i].valor) : "automático";
+    });
+  }
+
+  function atualizarStatus() {
+    var pend = pendentes();
+    var hint = $("previewHint");
+    if (!pend.length) {
+      hint.textContent = "Tudo preenchido ✓ — documentos liberados para PDF.";
+      hint.style.color = "#12805a";
+    } else {
+      hint.textContent = "Faltam " + pend.length + " campo(s) obrigatório(s): " +
+        pend.slice(0, 3).map(function (r) { return r.nome; }).join(", ") + (pend.length > 3 ? "…" : "");
+      hint.style.color = "#c0392b";
+    }
+  }
+
+  /* ================= parcelas ================= */
+  function renderPags() {
+    var box = $("pagRows");
+    var rows = pagamentos();
+    box.innerHTML = "";
+    S.pags.forEach(function (p, idx) {
+      var row = document.createElement("div");
+      row.className = "pag-row";
+      var opts = ['<option value="">—</option>'].concat(FORMAS.map(function (f) {
+        return '<option value="' + esc(f) + '"' + (p.forma === f ? " selected" : "") + ">" + esc(f) + "</option>";
+      })).join("");
+      var ph = (rows[idx] && !p.valor) ? (rows[idx].valor ? brl(rows[idx].valor) : "automático") : "opcional";
+      row.innerHTML =
+        '<span style="font-size:10.5px;font-weight:700;color:#66768a;text-align:center">' + (ORD[idx] || (idx + 1)) + "</span>" +
+        '<select data-k="forma" aria-label="Forma de pagamento">' + opts + "</select>" +
+        '<input type="text" data-k="desc" value="' + esc(p.desc) + '" placeholder="opcional (ex.: 24 X)" aria-label="Descrição">' +
+        '<input type="text" data-k="valor" value="' + esc(p.valor) + '" placeholder="' + esc(ph) + '" inputmode="numeric" aria-label="Valor">' +
+        '<button type="button" class="del" title="Remover">&times;</button>';
+      row.querySelectorAll("input,select").forEach(function (inp) {
+        if (inp.tagName === "SELECT") {
+          inp.addEventListener("change", function () {
+            S.pags[idx].forma = inp.value;
+            inp.classList.remove("invalid");
+            renderPags(); render(); saver();
+          });
+        } else {
+          inp.addEventListener("input", function () {
+            if (inp.dataset.k === "valor") maskMoney(inp);
+            S.pags[idx][inp.dataset.k] = inp.value;
+            render(); saver();
+          });
+        }
+      });
+      row.querySelector(".del").addEventListener("click", function () {
+        if (S.pags.length === 1) S.pags[0] = {forma:"", desc:"", valor:""};
+        else S.pags.splice(idx, 1);
+        renderPags(); render(); saver();
+      });
+      box.appendChild(row);
+    });
+  }
+
+  /* ================= CEP ================= */
+  function buscarCep(cep, prefix) {
+    var d = digits(cep);
+    if (d.length !== 8) return;
+    fetch("https://viacep.com.br/ws/" + d + "/json/")
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.erro) { toast("CEP não encontrado — preencha o endereço manualmente.", true); return; }
+        var map = {Logradouro:j.logradouro || "", Bairro:j.bairro || "", Cidade:j.localidade || "", Uf:(j.uf || "").toUpperCase()};
+        Object.keys(map).forEach(function (k) {
+          var el = $(prefix + k);
+          if (el) { el.value = map[k]; onField(prefix + k, map[k]); }
+        });
+        var numEl = $(prefix + "Numero");
+        if (numEl && !numEl.value) numEl.focus();
+        render(); saver();
+        toast("Endereço preenchido pelo CEP.");
+      })
+      .catch(function () { toast("Não foi possível consultar o CEP agora — preencha manualmente.", true); });
+  }
+
+  function onField(id, val) {
+    var map = {
+      cliNome:"cliNome", cliDoc:"cliDoc", cliCep:"cliCep", cliLogradouro:"cliLogradouro", cliNumero:"cliNumero",
+      cliCompl:"cliCompl", cliBairro:"cliBairro", cliCidade:"cliCidade", cliUf:"cliUf",
+      instCep:"instCep", instLogradouro:"instLogradouro", instNumero:"instNumero", instCompl:"instCompl",
+      instBairro:"instBairro", instCidade:"instCidade", instUf:"instUf",
+      invMarca:"invMarca", invPot:"invPot", invQtd:"invQtd", painelMarca:"painelMarca", painelWp:"painelWp",
+      painelQtd:"painelQtd", estrutura:"estrutura", valorTotal:"valorTotal", obs:"obs",
+      assinaturaLocal:"assinaturaLocal", foroComarca:"foroComarca", dataAssinatura:"dataAssinatura"
+    };
+    if (map[id]) S[map[id]] = val;
+  }
+
+  /* ================= persistência ================= */
+  function saver() { try { localStorage.setItem(STATE_KEY, JSON.stringify(S)); } catch (e) {} }
+  function load() {
+    try {
+      var raw = localStorage.getItem(STATE_KEY);
+      if (raw) {
+        var o = JSON.parse(raw);
+        Object.keys(DEFAULTS).forEach(function (k) { if (o[k] !== undefined) S[k] = o[k]; });
+        if (!Array.isArray(S.pags) || !S.pags.length) S.pags = [{forma:"", desc:"", valor:""}];
+        S.pags = S.pags.map(function (p) { return {forma:p.forma || "", desc:p.desc || "", valor:p.valor || ""}; });
+      }
+    } catch (e) {}
+  }
+
+  function hydrate() {
+    var v = {
+      cliNome:S.cliNome, cliDoc:S.cliDoc, cliCep:S.cliCep, cliLogradouro:S.cliLogradouro,
+      cliNumero:S.cliNumero, cliCompl:S.cliCompl, cliBairro:S.cliBairro, cliCidade:S.cliCidade, cliUf:S.cliUf,
+      instCep:S.instCep, instLogradouro:S.instLogradouro, instNumero:S.instNumero, instCompl:S.instCompl,
+      instBairro:S.instBairro, instCidade:S.instCidade, instUf:S.instUf,
+      invMarca:S.invMarca, invPot:S.invPot, invQtd:S.invQtd, painelMarca:S.painelMarca,
+      painelWp:S.painelWp, painelQtd:S.painelQtd, estrutura:S.estrutura, valorTotal:S.valorTotal,
+      obs:S.obs, assinaturaLocal:S.assinaturaLocal, foroComarca:S.foroComarca, dataAssinatura:S.dataAssinatura
+    };
+    Object.keys(v).forEach(function (k) { if ($(k)) $(k).value = v[k]; });
+    $("chkInstDiff").checked = !!S.instDiff;
+    $("cardInst").hidden = !S.instDiff;
+    $("chkObs").checked = !!S.obsOn;
+    $("obsWrap").hidden = !S.obsOn;
+    renderPags();
+  }
+
+  /* ================= PDF ================= */
+  function nomeBase() {
+    var n = (S.cliNome || "").trim().replace(/\s+/g, " ");
+    if (!n) return "SEM NOME";
+    return n.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ");
+  }
+  function nomeArquivo(tipo) { return (tipo === "contrato" ? "Contrato" : "Procuração") + " - " + nomeBase() + ".pdf"; }
+
+  function bloquear(msg) {
+    toast(msg, true);
+    var el = document.querySelector(".invalid");
+    if (el) {
+      el.scrollIntoView({behavior:"smooth", block:"center"});
+      try { el.focus({preventScroll:true}); } catch (e) { el.focus(); }
+    }
+  }
+
+  function gerarPDF(tipo) {
+    var pend = validar(true);
+    atualizarStatus();
+    if (pend.length) {
+      bloquear("Faltam " + pend.length + " campo(s): " + pend.slice(0, 3).map(function (r) { return r.nome; }).join(", ") +
+        (pend.length > 3 ? "…" : "") + ". Complete os campos destacados.");
+      return;
+    }
+    /* FIX: geração 100% local e fiel — usa a impressão nativa do navegador,
+       cuja rota @page A4/margin:0 plota cada folha .sheet (794×1123px = A4 exato)
+       idêntica ao preview. A biblioteca html2canvas desenhava o texto duplicado
+       e sobreposto, por isso foi removida desta rota. */
+    abrirAba(tipo);
+    var nome = nomeArquivo(tipo);
+    document.title = nome; /* vira o nome sugerido no 'Salvar como PDF' */
+    toast("Na janela de impressão escolha 'Salvar como PDF' — o documento sai em A4 com o nome do cliente: " + nome);
+    setTimeout(function () { window.print(); }, 350);
+  }
+
+  /* ================= abas / modo documento ================= */
+  function abrirAba(tipo) {
+    document.querySelectorAll(".tab").forEach(function (t) { t.classList.toggle("active", t.dataset.tab === tipo); });
+    $("docContrato").hidden = tipo !== "contrato";
+    $("docProc").hidden = tipo !== "procuracao";
+  }
+
+  /* ================= binds ================= */
+  function bind() {
+    var ids = ["cliNome","cliLogradouro","cliNumero","cliCompl","cliBairro","cliCidade","cliUf",
+      "instLogradouro","instNumero","instCompl","instBairro","instCidade","instUf",
+      "invMarca","invPot","invQtd","painelMarca","painelWp","painelQtd","estrutura",
+      "valorTotal","obs","assinaturaLocal","foroComarca","dataAssinatura"];
+    ids.forEach(function (id) {
+      var el = $(id);
+      if (!el) return;
+      el.addEventListener("input", function () {
+        if (id === "valorTotal") maskMoney(el);
+        if (id === "cliUf" || id === "instUf") el.value = el.value.toUpperCase().slice(0, 2);
+        el.classList.remove("invalid");
+        onField(id, el.value);
+        render(); saver();
+      });
+    });
+
+    $("cliDoc").addEventListener("input", function () {
+      this.value = maskDoc(this.value);
+      S.cliDoc = this.value;
+      this.classList.remove("invalid");
+      render(); saver();
+    });
+
+    [["cliCep","cli"],["instCep","inst"]].forEach(function (pair) {
+      var el = $(pair[0]), prefix = pair[1];
+      el.addEventListener("input", function () {
+        this.value = maskCep(this.value);
+        this.classList.remove("invalid");
+        onField(pair[0], this.value);
+        render(); saver();
+        if (digits(this.value).length === 8) buscarCep(this.value, prefix);
+      });
+    });
+
+    $("chkInstDiff").addEventListener("change", function () {
+      S.instDiff = this.checked;
+      $("cardInst").hidden = !this.checked;
+      render(); saver();
+      if (this.checked) $("instCep").focus();
+    });
+
+    $("chkObs").addEventListener("change", function () {
+      S.obsOn = this.checked;
+      $("obsWrap").hidden = !this.checked;
+      if (this.checked) { $("obs").value = S.obs || ""; $("obs").focus(); }
+      render(); saver();
+    });
+
+    $("btnAddPag").addEventListener("click", function () {
+      S.pags.push({forma:"", desc:"", valor:""});
+      renderPags(); render(); saver();
+    });
+
+    function seguro(tipo) {
+      return function () {
+        try { gerarPDF(tipo); }
+        catch (e) {
+          toast("Erro ao gerar o PDF: " + (e && e.message ? e.message : e) + ". Use Imprimir e escolha 'Salvar como PDF'.", true);
+        }
+      };
+    }
+    ["btnPdfContrato","btnPdfContrato2"].forEach(function (id) {
+      $(id).addEventListener("click", seguro("contrato"));
+    });
+    ["btnPdfProc","btnPdfProc2"].forEach(function (id) {
+      $(id).addEventListener("click", seguro("procuracao"));
+    });
+
+    $("btnPrint").addEventListener("click", function () {
+      var pend = validar(true);
+      atualizarStatus();
+      if (pend.length) { bloquear("Faltam " + pend.length + " campo(s) obrigatório(s). Complete os campos destacados."); return; }
+      window.print();
+    });
+
+    window.addEventListener("beforeprint", function () {
+      document.body.classList.toggle("printblocked", pendentes().length > 0);
+    });
+    window.addEventListener("afterprint", function () {
+      document.body.classList.remove("printblocked");
+      document.title = "DNA Elétrica — Gerador de Contrato e Procuração";
+    });
+
+    $("btnLimpar").addEventListener("click", function () {
+      if (!confirm("Limpar todos os campos digitados?")) return;
+      try { localStorage.removeItem(STATE_KEY); } catch (e) {}
+      S = JSON.parse(JSON.stringify(DEFAULTS));
+      S.dataAssinatura = dataExtenso(new Date());
+      hydrate(); render(); saver();
+      toast("Formulário limpo.");
+    });
+
+    document.querySelectorAll(".tab").forEach(function (t) {
+      t.addEventListener("click", function () { abrirAba(t.dataset.tab); });
+    });
+
+    window.addEventListener("resize", function () {
+      clearTimeout(bind._rz);
+      bind._rz = setTimeout(render, 250);
+    });
+  }
+
+  /* ================= init ================= */
+  load();
+  if (!S.dataAssinatura) S.dataAssinatura = dataExtenso(new Date());
+  hydrate();
+  bind();
+  render();
+
+  var q = /[?&]doc=([a-z]+)/.exec(location.search);
+  if (q) {
+    document.body.classList.add("docmode");
+    abrirAba(q[1] === "procuracao" ? "procuracao" : "contrato");
+  } else {
+    abrirAba("contrato");
+  }
+
+  window.__dnaGerador = {state:S, render:render, pendentes:pendentes, nomeBase:nomeBase, paginar:paginar, pagamentos:pagamentos};
+})();
+</script>
+</body>
+</html>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
