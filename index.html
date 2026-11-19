@@ -186,6 +186,7 @@ body.docmode .sheet{box-shadow:none;margin:0 auto 10px}
   <div class="top-actions">
     <button type="button" class="btn primary" id="btnPdfContrato">Baixar contrato (PDF)</button>
     <button type="button" class="btn primary" id="btnPdfProc">Baixar procuração (PDF)</button>
+    <button type="button" class="btn solid" id="btnPdfAmbos">Baixar contrato + procuração (PDF)</button>
     <button type="button" class="btn ghost" id="btnPrint">Imprimir</button>
     <button type="button" class="btn ghost" id="btnLimpar">Limpar</button>
   </div>
@@ -422,74 +423,74 @@ body.docmode .sheet{box-shadow:none;margin:0 auto 10px}
       {t:"p", s:[[true,"VENDEDOR: DNA ELÉTRICA ENERGIA SOLAR LTDA"],[false,", pessoa jurídica de direito privado, inscrita no CNPJ sob n° 30.002.569/0001-57, com sede na Rua Isaurino do Vale, nº 225, Bairro Vila Tavares, em Itaúna-MG – CEP: 35680-071, neste ato legalmente representada pelo sócio Iheleno Ferreira da Silva Pinto, brasileiro, casado, empresário, inscrito no CPF sob nº 865.902.276-91 e portador do RG nº MG-7.513.691."]]},
       {t:"p", s:[[true,"COMPRADOR: {{cli_nome}}"],[false,", portador(a) do {{doc_label}} de nº {{cli_doc}}, residente e domiciliado(a) na {{cli_logradouro}}, nº {{cli_numero}}{{cli_compl}}, Bairro {{cli_bairro}}, em {{cli_cidade}} – {{cli_uf}}, CEP: {{cli_cep}}."]]},
       {t:"p", s:[[false,"As partes acima identificadas têm entre si justas e acertadas o presente contrato de compra e venda de equipamentos e mão de obra do gerador fotovoltaico, que se regerá pelas cláusulas seguintes e pelas condições descritas no presente."]]},
-      {t:"clause", s:[[false,"cláusula primeira – objeto do contrato"]]},
-      {t:"p", s:[[false,"O presente contrato de modalidade turn key tem como OBJETO, a prestação por parte do "],[true,"VENDEDOR"],[false," do fornecimento dos materiais e equipamentos discriminados na cláusula seguinte, a prestação de serviços de mão de obra de instalação do Gerador Fotovoltaico, elaboração do projeto elétrico fotovoltaico e a solicitação, em nome da "],[true,"CONTRATANTE"],[false,", de acesso junto à Concessionária de energia Cemig para conclusão da homologação (“Parecer de Acesso”) e efetiva instalação da usina fotovoltaica, necessários à implantação do sistema de geração de energia fotovoltaica (“UFV”)."]]},
-      {t:"p", s:[[false,"O endereço de instalação: {{inst_logradouro}}, nº {{inst_numero}}{{inst_compl}}, bairro {{inst_bairro}} em {{inst_cidade}} – {{inst_uf}}."]]},
-      {t:"clause", s:[[false,"cláusula segunda – equipamentos"]]},
-      {t:"p", s:[[false,"O sistema com potência de "],[true,"{{potencia_kwp}}"],[false,", é composto pelos materiais relacionados na planilha abaixo:"]]},
+      {t:"clause", s:[[false,"CLÁUSULA PRIMEIRA - OBJETO DO CONTRATO"]]},
+      {t:"p", s:[[false,"1.1. O presente contrato de modalidade turn key tem como OBJETO, a prestação por parte do "],[true,"VENDEDOR"],[false," do fornecimento dos materiais e equipamentos discriminados na cláusula seguinte, a prestação de serviços de mão de obra de instalação do Gerador Fotovoltaico, elaboração do projeto elétrico fotovoltaico e a solicitação, em nome da "],[true,"CONTRATANTE"],[false,", de acesso junto à Concessionária de energia Cemig para conclusão da homologação (“Parecer de Acesso”) e efetiva instalação da usina fotovoltaica, necessários à implantação do sistema de geração de energia fotovoltaica (“UFV”)."]]},
+      {t:"p", s:[[false,"1.2. O endereço de instalação: {{inst_logradouro}}, nº {{inst_numero}}{{inst_compl}}, bairro {{inst_bairro}} em {{inst_cidade}} – {{inst_uf}}."]]},
+      {t:"clause", s:[[false,"CLÁUSULA SEGUNDA - EQUIPAMENTOS"]]},
+      {t:"p", s:[[false,"2.1. O sistema com potência de "],[true,"{{potencia_kwp}}"],[false,", é composto pelos materiais relacionados na planilha abaixo:"]]},
       {t:"table_equip", s:[]},
-      {t:"p", s:[[true,"Ressalvamos que, na entrega dos equipamentos, caso não esteja disponível o painel fotovoltaico da potência e/ou marca mencionada acima, o mesmo será trocado, porém mantendo a potência pico do sistema. Cabeamento CA incluso na proposta com até 15 metros de distância do ponto de conexão."]]},
-      {t:"clause", s:[[false,"Cláusula terceira – preço"]]},
-      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," pagará ao "],[true,"VENDEDOR"],[false,", pela compra do kit fotovoltaico e execução do projeto, objeto deste contrato, o valor de "],[true,"{{valor_total}}"],[false,". O pagamento será efetuado conforme as condições descriminadas abaixo:"]]},
+      {t:"p", s:[[true,"2.2. Ressalvamos que, na entrega dos equipamentos, caso não esteja disponível o painel fotovoltaico da potência e/ou marca mencionada acima, o mesmo será trocado, porém mantendo a potência pico do sistema. Cabeamento CA incluso na proposta com até 15 metros de distância do ponto de conexão."]]},
+      {t:"clause", s:[[false,"CLÁUSULA TERCEIRA - PREÇO"]]},
+      {t:"p", s:[[false,"3.1. O "],[true,"COMPRADOR"],[false," pagará ao "],[true,"VENDEDOR"],[false,", pela compra do kit fotovoltaico e execução do projeto, objeto deste contrato, o valor de "],[true,"{{valor_total}}"],[false,". O pagamento será efetuado conforme as condições descriminadas abaixo:"]]},
       {t:"table_pag", s:[]},
       {t:"obs", s:[]},
-      {t:"p", s:[[false,"Os pagamentos serão efetuados através de boletos bancários, transferência bancária ou cheques e somente serão considerados válidos após a efetiva compensação e crédito na conta do "],[true,"VENDEDOR"],[false,"."]]},
-      {t:"p", s:[[false,"As partes estabelecem neste instrumento a reserva de domínio sobre os bens adquiridos, pela qual fica reservado ao "],[true,"VENDEDOR"],[false," o direito de propriedade dos bens objeto deste contrato, até a total liquidação das parcelas estabelecidas pelas partes para o pagamento do preço."]]},
-      {t:"clause", s:[[false,"cláusula quarta – obrigações do comprador"]]},
-      {t:"p", s:[[false,"Será de total responsabilidade do "],[true,"COMPRADOR"],[false," qualquer obra civil necessária para a execução do projeto, tais como: adequação da infraestrutura da rede elétrica interna do imóvel, troca do quadro de distribuição ou do quadro do medidor externo da concessionária Cemig, obras civis no telhado, obras civis na estrutura do telhado e qualquer obra civil desta natureza."]]},
-      {t:"p", s:[[false,"Caberá ao "],[true,"COMPRADOR"],[false," a elaboração prévia de laudo estrutural para aferição do peso suportado pelo equipamento a ser instalado, sendo que o mesmo poderá dispensar a sua realização, assumindo toda responsabilidade e risco pela estrutura existente."]]},
-      {t:"p", s:[[false,"Cabe ao "],[true,"COMPRADOR"],[false," comunicar antecipadamente ao "],[true,"VENDEDOR"],[false," da necessidade de qualquer obra civil dentre as mencionadas acima ou outra que sejam necessárias e que não estão descritas neste contrato."]]},
-      {t:"p", s:[[false,"Compete ao "],[true,"COMPRADOR"],[false," promover a manutenção periódica dos equipamentos que compõem o gerador fotovoltaico."]]},
-      {t:"clause", s:[[false,"cláusula quinta – obrigações do vendedor"]]},
-      {t:"p", s:[[false,"Cabe ao "],[true,"VENDEDOR"],[false," a elaboração do projeto elétrico, bem como a solicitação de acesso à rede junto à Concessionária de Energia Cemig."]]},
-      {t:"p", s:[[false,"Para que o "],[true,"VENDEDOR"],[false," possa realizar as consultas preliminares e realizar as solicitações à concessionária o "],[true,"COMPRADOR"],[false," se compromete a outorgar procuração atuação em seu nome nesta finalidade específica."]]},
-      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," se compromete a instalar todos os equipamentos descritos neste contrato dentro do prazo de 120 dias a contar do pagamento da entrada do preço convencionado, salientando, porém, que a efetiva geração de energia em favor do adquirente depende da homologação do sistema que é de total responsabilidade da concessionária CEMIG conforme clausula descrita nesse contrato."]]},
-      {t:"p", s:[[false,"O prazo de entrega poderá ser prorrogado mediante a ocorrência de Caso fortuito, força maior ou dificuldades de acesso ao imóvel, surgimento de imprevistos técnicos que impliquem na paralisação dos trabalhos ou na necessidade de substituição de materiais, descumprimento no prazo de fornecimento dos equipamentos por motivo de terceiros e não imputáveis ao "],[true,"VENDEDOR"],[false,", alteração do projeto por parte do "],[true,"COMPRADOR"],[false,"."]]},
-      {t:"p", s:[[false,"Utilizar equipamentos adequados à realização dos serviços e pessoal qualificado, assumindo plena e exclusiva responsabilidade por sua contratação, eximindo o "],[true,"COMPRADOR"],[false," de qualquer responsabilidade."]]},
-      {t:"clause", s:[[false,"CLÁUSULA SEXTA – HOMOLOGAÇÃO DA CONCESSIONÁRIA"]]},
-      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," declara expressamente que tem ciência de que a efetiva geração de energia e utilização pelo "],[true,"COMPRADOR"],[false," está condicionada à homologação pela "],[true,"CONCESSIONÁRIA DE ENERGIA CEMIG"],[false,", obedecendo aos prazos estabelecidos na resolução nº 482/2012 da ANEEL."]]},
-      {t:"p", s:[[false,"Na hipótese de atraso ou caso a Concessionária Cemig não cumpra com os prazos previstos na resolução acima citada, não cabe qualquer responsabilidade deste atraso ao "],[true,"VENDEDOR"],[false,", bem como não é devido por este ao "],[true,"COMPRADOR"],[false," qualquer forma de indenização, compensação, ressarcimento ou reembolso em decorrência deste atraso e da emissão de contas e faturas de consumo."]]},
-      {t:"clause", s:[[false,"CLÁUSULA SÉTIMA – GARANTIAS DO PRODUTO E ORIENTAÇÕES DE USO"]]},
-      {t:"p", s:[[false,"Os materiais tem garantia contra defeitos de fabricação e eficiência concedidas pelo "],[true,"“FABRICANTE DO MATERIAL/FORNECEDOR"],[false,"” conforme descriminado abaixo:"]]},
-      {t:"li", s:[[false,"Painel Fotovoltaico: 10 anos"]]},
-      {t:"li", s:[[false,"Inversor: 5 anos"]]},
-      {t:"li", s:[[false,"String Box e Conectores: 6 meses"]]},
-      {t:"li", s:[[false,"Estrutura: 6 meses"]]},
-      {t:"li", s:[[false,"Mão de Obra de instalação: 6 meses"]]},
-      {t:"p", s:[[false,"O fabricante dos painéis fotovoltaicos garante a eficiência dos mesmos pelo prazo de 25 anos de utilização com 80% de geração."]]},
-      {t:"p", s:[[false,"Cabe ao "],[true,"VENDEDOR"],[false," fazer a reposição ou conserto do equipamento que apresentar qualquer defeito de fabricação detectadas em vistoria por ele realizada, assim como realizar o contato junto ao "],[true,"FABRICANTE/FORNECEDOR"],[false," para resolução do caso."]]},
-      {t:"p", s:[[false,"Não cabe ao "],[true,"VENDEDOR"],[false," qualquer indenização ou ressarcimento financeiro ao "],[true,"COMPRADOR"],[false," durante o período de reposição ou conserto do equipamento."]]},
-      {t:"p", s:[[true,"A presente garantia não cobre defeitos ou falhas decorrentes do desgaste normal dos materiais e componentes, erros operacionais, erros de manutenção ou de sua falta, manuseio inadequado dos acessórios ou dos equipamentos, equipamentos mantidos inoperantes por período superior a 30 (trinta) dias, sem que seja observada a sua manutenção ou, ainda, danos ou defeitos causados por erosão, corrosão, intempéries, etc."]]},
-      {t:"p", s:[[false,"A garantia torna-se nula sempre que houver a violação de qualquer tipo de lacre de instalação dos equipamentos fornecidos pelo "],[true,"VENDEDOR."]]},
-      {t:"p", s:[[false,"O "],[true,"VENDEDOR "],[false,"não será responsável por quaisquer custos ou prejuízos decorrentes de modificações, remoção, instalação, reinstalação ou substituição de equipamentos, componentes, partes ou acessórios, realizadas pelo "],[true,"COMPRADOR "],[false,"ou por terceiros sem o prévio e expresso consentimento seu por escrito, sendo que a inobservância deste item acarreta a anulação e invalidade da garantia."]]},
-      {t:"clause", s:[[false,"CLÁUSULA OITAVA – ORIENTAÇÕES SOBRE UTILIZAÇÃO E MANUTENÇÃO"]]},
-      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," declara haver recebido todos os manuais e orientação para correta utilização do equipamento."]]},
-      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," orienta e sugere ao "],[true,"COMPRADOR"],[false," a contratar um seguro especifico contra danos causados por forças da natureza (tempestades, furacões, vendavais, etc.) visto que os danos no equipamento decorrentes destes eventos não são contemplados ou cobertos por qualquer tipo de garantia."]]},
-      {t:"p", s:[[false," O "],[true,"VENDEDOR"],[false," orienta o "],[true,"COMPRADOR"],[false," a fazer a manutenção do gerador fotovoltaico a cada 2 meses, afim de manter o funcionamento do mesmo em ALTA PERFORMANCE."]]},
-      {t:"clause", s:[[false,"CLÁUSULA NONA – DA RESCISÃO E INADIMPLEMENTO"]]},
-      {t:"p", s:[[false,"Este contrato poderá ser rescindido no caso de inadimplemento de quaisquer obrigações ora estabelecidas, independentemente de notificação, ou, ainda, no caso de inexecução total    ou parcial deste contrato."]]},
-      {t:"p", s:[[false,"A parte infratora ficará obrigada a pagar a multa equivalente a 20% (vinte por cento) sobre o valor total do contrato à outra parte, sem prejuízo das perdas e danos que a referida infração acarretar."]]},
-      {t:"p", s:[[false,"Para o caso de rescisão por inadimplência no pagamento de uma ou mais parcelas, além das perdas, danos e lucros cessantes acima, arcará o "],[true,"COMPRADOR "],[false,"com o pagamento dos juros à taxa de 1% ao mês, da correção monetária pelo índice do IGPM ou outro que vier a substituí-lo, bem como da multa de 2%."]]},
-      {t:"p", s:[[false,"Eventual rescisão unilateral pelo "],[true,"COMPRADOR"],[false,", excluída a hipótese acima, deverá ser feita mediante aviso prévio (por escrito) e desde que ocorra antes da aquisição dos materiais previstos, arcando, nesta hipótese, com o pagamento da multa de 10% (dez por cento) do valor do contrato."]]},
-      {t:"p", s:[[false,"Após o adimplimento das obrigações assumidas pelo "],[true,"VENDEDOR"],[false," e, em não ocorrendo o pagamento das prestações, por parte do "],[true,"COMPRADOR"],[false,", nos prazos estipulados, haverá o vencimento imediato das demais parcelas vincendas, podendo o "],[true,"VENDEDOR"],[false," promover, independentemente de interpelação judicial ou extrajudicial, aviso ou notificação, a rescisão deste instrumento, cabendo ao "],[true,"VENDEDOR"],[false," a escolha de promover à execução judicial do contrato ou, caso assim queira, requerer a apreensão e depósito judicial dos bens móveis, para devolução, em virtude da "],[false,"cláusula pactum reservati dominii"],[false,", onde somente será devolvido algum valor ao "],[true,"COMPRADOR"],[false,", na hipótese de existência de saldo remanescente, apurado após o desconto das multas alhures previstas, das despesas suportadas pelo "],[true,"VENDEDOR"],[false," para a aquisição e instalação do objeto do contrato e, ainda, da depreciação dos bens móveis, a qual fica fixada, desde já, em 20% (vinte por cento) ao ano."]]},
-      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," poderá rescindir este contrato, de pleno direito, independentemente de qualquer notificação, interpelação judicial ou extrajudicial, se o "],[true,"COMPRADOR"],[false," entrar em estado de insolvência ou se lhe for decretada a falência por qualquer dívida que tenha contraído fora deste instrumento."]]},
-      {t:"p", s:[[false,"A rescisão poderá ocorrer, ainda, por mútuo acordo entre as partes e a qualquer tempo por fato imprevisível e de força maior, caso em que não haverá encargo algum a nenhuma delas."]]},
-      {t:"p", s:[[false,"Em confirmada a rescisão deste contrato, o "],[true,"COMPRADOR"],[false," fica obrigado a restituir o objeto deste contrato ao "],[true,"VENDEDOR"],[false,", em bom estado de conservação, salvo o desgaste natural pelo uso."]]},
-      {t:"p", s:[[false,"Não poderá o "],[true,"COMPRADOR"],[false," ceder o bem, objeto do contrato, a terceiro, sem a devida anuência do "],[true,"VENDEDOR"],[false,", nem constituir, direta ou indiretamente, ônus, penhor, caução ou qualquer outro gravame sobre mesmo, até que sejam quitadas todas as parcelas previstas neste contrato."]]},
-      {t:"p", s:[[false,"O "],[true,"VENDEDOR"],[false," possui o direito de pleitear qualquer medida protetora do domínio do objeto deste instrumento, bem como se proteger contra qualquer ato que o impeça de exercer tal direito."]]},
-      {t:"p", s:[[false,"Na hipótese de rescisão por iniciativa ou culpa do "],[true,"COMPRADOR"],[false," serão devidos honorários advocatícios, no importe de 20% (vinte por cento) do valor total do débito, na hipótese de procedimentos de cobrança administrativa ou judicial."]]},
-      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA – DA CONSERVAÇÃO E USO DO BEM"]]},
-      {t:"p", s:[[false,"Enquanto não forem pagas todas as parcelas, o "],[true,"COMPRADOR"],[false," obrigar-se-á por zelar pela conservação dos bens objeto do presente contrato, providenciando todos os recursos necessários à manutenção do mesmo, correndo todos os custos por sua conta, devendo cuidar também da aparência e do bom funcionamento do mesmo, sendo-lhe impedido alterar a estrutura onde foram instalados os bens, de modo que não desvirtue seu uso e altere suas características."]]},
-      {t:"p", s:[[false,"O "],[true,"COMPRADOR"],[false," será responsável, enquanto existirem parcelas e valores a serem adimplidos, ou seja, durante a vigência da cláusula de reserva de domínio, pelo perecimento dos bens objeto do presente contrato, ainda que o perecimento ocorra em virtude de caso fortuito ou força maior."]]},
-      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA PRIMEIRA – USO DE IMAGEM"]]},
+      {t:"p", s:[[false,"3.2. Os pagamentos serão efetuados através de boletos bancários, transferência bancária ou cheques e somente serão considerados válidos após a efetiva compensação e crédito na conta do "],[true,"VENDEDOR"],[false,"."]]},
+      {t:"p", s:[[false,"3.3. As partes estabelecem neste instrumento a reserva de domínio sobre os bens adquiridos, pela qual fica reservado ao "],[true,"VENDEDOR"],[false," o direito de propriedade dos bens objeto deste contrato, até a total liquidação das parcelas estabelecidas pelas partes para o pagamento do preço."]]},
+      {t:"clause", s:[[false,"CLÁUSULA QUARTA - OBRIGAÇÕES DO COMPRADOR"]]},
+      {t:"p", s:[[false,"4.1. Será de total responsabilidade do "],[true,"COMPRADOR"],[false," qualquer obra civil necessária para a execução do projeto, tais como: adequação da infraestrutura da rede elétrica interna do imóvel, troca do quadro de distribuição ou do quadro do medidor externo da concessionária Cemig, obras civis no telhado, obras civis na estrutura do telhado e qualquer obra civil desta natureza."]]},
+      {t:"p", s:[[false,"4.2. Caberá ao "],[true,"COMPRADOR"],[false," a elaboração prévia de laudo estrutural para aferição do peso suportado pelo equipamento a ser instalado, sendo que o mesmo poderá dispensar a sua realização, assumindo toda responsabilidade e risco pela estrutura existente."]]},
+      {t:"p", s:[[false,"4.3. Cabe ao "],[true,"COMPRADOR"],[false," comunicar antecipadamente ao "],[true,"VENDEDOR"],[false," da necessidade de qualquer obra civil dentre as mencionadas acima ou outra que sejam necessárias e que não estão descritas neste contrato."]]},
+      {t:"p", s:[[false,"4.4. Compete ao "],[true,"COMPRADOR"],[false," promover a manutenção periódica dos equipamentos que compõem o gerador fotovoltaico."]]},
+      {t:"clause", s:[[false,"CLÁUSULA QUINTA - OBRIGAÇÕES DO VENDEDOR"]]},
+      {t:"p", s:[[false,"5.1. Cabe ao "],[true,"VENDEDOR"],[false," a elaboração do projeto elétrico, bem como a solicitação de acesso à rede junto à Concessionária de Energia Cemig."]]},
+      {t:"p", s:[[false,"5.2. Para que o "],[true,"VENDEDOR"],[false," possa realizar as consultas preliminares e realizar as solicitações à concessionária o "],[true,"COMPRADOR"],[false," se compromete a outorgar procuração atuação em seu nome nesta finalidade específica."]]},
+      {t:"p", s:[[false,"5.3. O "],[true,"VENDEDOR"],[false," se compromete a instalar todos os equipamentos descritos neste contrato dentro do prazo de 120 dias a contar do pagamento da entrada do preço convencionado, salientando, porém, que a efetiva geração de energia em favor do adquirente depende da homologação do sistema que é de total responsabilidade da concessionária CEMIG conforme clausula descrita nesse contrato."]]},
+      {t:"p", s:[[false,"5.4. O prazo de entrega poderá ser prorrogado mediante a ocorrência de Caso fortuito, força maior ou dificuldades de acesso ao imóvel, surgimento de imprevistos técnicos que impliquem na paralisação dos trabalhos ou na necessidade de substituição de materiais, descumprimento no prazo de fornecimento dos equipamentos por motivo de terceiros e não imputáveis ao "],[true,"VENDEDOR"],[false,", alteração do projeto por parte do "],[true,"COMPRADOR"],[false,"."]]},
+      {t:"p", s:[[false,"5.5. Utilizar equipamentos adequados à realização dos serviços e pessoal qualificado, assumindo plena e exclusiva responsabilidade por sua contratação, eximindo o "],[true,"COMPRADOR"],[false," de qualquer responsabilidade."]]},
+      {t:"clause", s:[[false,"CLÁUSULA SEXTA - HOMOLOGAÇÃO DA CONCESSIONÁRIA"]]},
+      {t:"p", s:[[false,"6.1. O "],[true,"COMPRADOR"],[false," declara expressamente que tem ciência de que a efetiva geração de energia e utilização pelo "],[true,"COMPRADOR"],[false," está condicionada à homologação pela "],[true,"CONCESSIONÁRIA DE ENERGIA CEMIG"],[false,", obedecendo aos prazos estabelecidos na resolução nº 482/2012 da ANEEL."]]},
+      {t:"p", s:[[false,"6.2. Na hipótese de atraso ou caso a Concessionária Cemig não cumpra com os prazos previstos na resolução acima citada, não cabe qualquer responsabilidade deste atraso ao "],[true,"VENDEDOR"],[false,", bem como não é devido por este ao "],[true,"COMPRADOR"],[false," qualquer forma de indenização, compensação, ressarcimento ou reembolso em decorrência deste atraso e da emissão de contas e faturas de consumo."]]},
+      {t:"clause", s:[[false,"CLÁUSULA SÉTIMA - GARANTIAS DO PRODUTO E ORIENTAÇÕES DE USO"]]},
+      {t:"p", s:[[false,"7.1. Os materiais tem garantia contra defeitos de fabricação e eficiência concedidas pelo "],[true,"“FABRICANTE DO MATERIAL/FORNECEDOR"],[false,"” conforme descriminado abaixo:"]]},
+      {t:"li", s:[[false,"7.1.1. Painel Fotovoltaico: 10 anos"]]},
+      {t:"li", s:[[false,"7.1.2. Inversor: 5 anos"]]},
+      {t:"li", s:[[false,"7.1.3. String Box e Conectores: 6 meses"]]},
+      {t:"li", s:[[false,"7.1.4. Estrutura: 6 meses"]]},
+      {t:"li", s:[[false,"7.1.5. Mão de Obra de instalação: 6 meses"]]},
+      {t:"p", s:[[false,"7.1.6. O fabricante dos painéis fotovoltaicos garante a eficiência dos mesmos pelo prazo de 25 anos de utilização com 80% de geração."]]},
+      {t:"p", s:[[false,"7.2. Cabe ao "],[true,"VENDEDOR"],[false," fazer a reposição ou conserto do equipamento que apresentar qualquer defeito de fabricação detectadas em vistoria por ele realizada, assim como realizar o contato junto ao "],[true,"FABRICANTE/FORNECEDOR"],[false," para resolução do caso."]]},
+      {t:"p", s:[[false,"7.3. Não cabe ao "],[true,"VENDEDOR"],[false," qualquer indenização ou ressarcimento financeiro ao "],[true,"COMPRADOR"],[false," durante o período de reposição ou conserto do equipamento."]]},
+      {t:"p", s:[[true,"7.4. A presente garantia não cobre defeitos ou falhas decorrentes do desgaste normal dos materiais e componentes, erros operacionais, erros de manutenção ou de sua falta, manuseio inadequado dos acessórios ou dos equipamentos, equipamentos mantidos inoperantes por período superior a 30 (trinta) dias, sem que seja observada a sua manutenção ou, ainda, danos ou defeitos causados por erosão, corrosão, intempéries, etc."]]},
+      {t:"p", s:[[false,"7.5. A garantia torna-se nula sempre que houver a violação de qualquer tipo de lacre de instalação dos equipamentos fornecidos pelo "],[true,"VENDEDOR."]]},
+      {t:"p", s:[[false,"7.6. O "],[true,"VENDEDOR "],[false,"não será responsável por quaisquer custos ou prejuízos decorrentes de modificações, remoção, instalação, reinstalação ou substituição de equipamentos, componentes, partes ou acessórios, realizadas pelo "],[true,"COMPRADOR "],[false,"ou por terceiros sem o prévio e expresso consentimento seu por escrito, sendo que a inobservância deste item acarreta a anulação e invalidade da garantia."]]},
+      {t:"clause", s:[[false,"CLÁUSULA OITAVA - ORIENTAÇÕES SOBRE UTILIZAÇÃO E MANUTENÇÃO"]]},
+      {t:"p", s:[[false,"8.1. O "],[true,"COMPRADOR"],[false," declara haver recebido todos os manuais e orientação para correta utilização do equipamento."]]},
+      {t:"p", s:[[false,"8.2. O "],[true,"VENDEDOR"],[false," orienta e sugere ao "],[true,"COMPRADOR"],[false," a contratar um seguro especifico contra danos causados por forças da natureza (tempestades, furacões, vendavais, etc.) visto que os danos no equipamento decorrentes destes eventos não são contemplados ou cobertos por qualquer tipo de garantia."]]},
+      {t:"p", s:[[false,"8.3. O "],[true,"VENDEDOR"],[false," orienta o "],[true,"COMPRADOR"],[false," a fazer a manutenção do gerador fotovoltaico a cada 2 meses, afim de manter o funcionamento do mesmo em ALTA PERFORMANCE."]]},
+      {t:"clause", s:[[false,"CLÁUSULA NONA - DA RESCISÃO E INADIMPLEMENTO"]]},
+      {t:"p", s:[[false,"9.1. Este contrato poderá ser rescindido no caso de inadimplemento de quaisquer obrigações ora estabelecidas, independentemente de notificação, ou, ainda, no caso de inexecução total    ou parcial deste contrato."]]},
+      {t:"p", s:[[false,"9.2. A parte infratora ficará obrigada a pagar a multa equivalente a 20% (vinte por cento) sobre o valor total do contrato à outra parte, sem prejuízo das perdas e danos que a referida infração acarretar."]]},
+      {t:"p", s:[[false,"9.3. Para o caso de rescisão por inadimplência no pagamento de uma ou mais parcelas, além das perdas, danos e lucros cessantes acima, arcará o "],[true,"COMPRADOR "],[false,"com o pagamento dos juros à taxa de 1% ao mês, da correção monetária pelo índice do IGPM ou outro que vier a substituí-lo, bem como da multa de 2%."]]},
+      {t:"p", s:[[false,"9.4. Eventual rescisão unilateral pelo "],[true,"COMPRADOR"],[false,", excluída a hipótese acima, deverá ser feita mediante aviso prévio (por escrito) e desde que ocorra antes da aquisição dos materiais previstos, arcando, nesta hipótese, com o pagamento da multa de 10% (dez por cento) do valor do contrato."]]},
+      {t:"p", s:[[false,"9.5. Após o adimplimento das obrigações assumidas pelo "],[true,"VENDEDOR"],[false," e, em não ocorrendo o pagamento das prestações, por parte do "],[true,"COMPRADOR"],[false,", nos prazos estipulados, haverá o vencimento imediato das demais parcelas vincendas, podendo o "],[true,"VENDEDOR"],[false," promover, independentemente de interpelação judicial ou extrajudicial, aviso ou notificação, a rescisão deste instrumento, cabendo ao "],[true,"VENDEDOR"],[false," a escolha de promover à execução judicial do contrato ou, caso assim queira, requerer a apreensão e depósito judicial dos bens móveis, para devolução, em virtude da "],[false,"cláusula pactum reservati dominii"],[false,", onde somente será devolvido algum valor ao "],[true,"COMPRADOR"],[false,", na hipótese de existência de saldo remanescente, apurado após o desconto das multas alhures previstas, das despesas suportadas pelo "],[true,"VENDEDOR"],[false," para a aquisição e instalação do objeto do contrato e, ainda, da depreciação dos bens móveis, a qual fica fixada, desde já, em 20% (vinte por cento) ao ano."]]},
+      {t:"p", s:[[false,"9.6. O "],[true,"VENDEDOR"],[false," poderá rescindir este contrato, de pleno direito, independentemente de qualquer notificação, interpelação judicial ou extrajudicial, se o "],[true,"COMPRADOR"],[false," entrar em estado de insolvência ou se lhe for decretada a falência por qualquer dívida que tenha contraído fora deste instrumento."]]},
+      {t:"p", s:[[false,"9.7. A rescisão poderá ocorrer, ainda, por mútuo acordo entre as partes e a qualquer tempo por fato imprevisível e de força maior, caso em que não haverá encargo algum a nenhuma delas."]]},
+      {t:"p", s:[[false,"9.8. Em confirmada a rescisão deste contrato, o "],[true,"COMPRADOR"],[false," fica obrigado a restituir o objeto deste contrato ao "],[true,"VENDEDOR"],[false,", em bom estado de conservação, salvo o desgaste natural pelo uso."]]},
+      {t:"p", s:[[false,"9.9. Não poderá o "],[true,"COMPRADOR"],[false," ceder o bem, objeto do contrato, a terceiro, sem a devida anuência do "],[true,"VENDEDOR"],[false,", nem constituir, direta ou indiretamente, ônus, penhor, caução ou qualquer outro gravame sobre mesmo, até que sejam quitadas todas as parcelas previstas neste contrato."]]},
+      {t:"p", s:[[false,"9.10. O "],[true,"VENDEDOR"],[false," possui o direito de pleitear qualquer medida protetora do domínio do objeto deste instrumento, bem como se proteger contra qualquer ato que o impeça de exercer tal direito."]]},
+      {t:"p", s:[[false,"9.11. Na hipótese de rescisão por iniciativa ou culpa do "],[true,"COMPRADOR"],[false," serão devidos honorários advocatícios, no importe de 20% (vinte por cento) do valor total do débito, na hipótese de procedimentos de cobrança administrativa ou judicial."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA - DA CONSERVAÇÃO E USO DO BEM"]]},
+      {t:"p", s:[[false,"10.1. Enquanto não forem pagas todas as parcelas, o "],[true,"COMPRADOR"],[false," obrigar-se-á por zelar pela conservação dos bens objeto do presente contrato, providenciando todos os recursos necessários à manutenção do mesmo, correndo todos os custos por sua conta, devendo cuidar também da aparência e do bom funcionamento do mesmo, sendo-lhe impedido alterar a estrutura onde foram instalados os bens, de modo que não desvirtue seu uso e altere suas características."]]},
+      {t:"p", s:[[false,"10.2. O "],[true,"COMPRADOR"],[false," será responsável, enquanto existirem parcelas e valores a serem adimplidos, ou seja, durante a vigência da cláusula de reserva de domínio, pelo perecimento dos bens objeto do presente contrato, ainda que o perecimento ocorra em virtude de caso fortuito ou força maior."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA PRIMEIRA - USO DE IMAGEM"]]},
       {t:"p", s:[[false,"(   ) Autorizo"]]},
       {t:"p", s:[[false,"(   ) Não autorizo"]]},
-      {t:"p", s:[[false,"O "],[true,"COMPRADOR "],[false,"assinala no parêntese acima, de próprio punho, a autorização ou não do uso da sua imagem pessoal ou do imóvel, objeto do local de instalação constante neste contrato, concedida por período indeterminado ao "],[true,"VENDEDOR"],[false,", de forma gratuita."]]},
-      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA SEGUNDA – CONFIDENCIALIDADE"]]},
-      {t:"p", s:[[false,"As partes, por si e por seus dirigentes, prepostos ou empregados, comprometem-se, mesmo após o término do presente contrato, a manter completa confidencialidade e sigilo sobre as condições deste contrato, reconhecendo que não poderão ser divulgados ou fornecidos a terceiros, salvo com expressa autorização, por escrito, da outra parte."]]},
+      {t:"p", s:[[false,"11.1. O "],[true,"COMPRADOR "],[false,"assinala no parêntese acima, de próprio punho, a autorização ou não do uso da sua imagem pessoal ou do imóvel, objeto do local de instalação constante neste contrato, concedida por período indeterminado ao "],[true,"VENDEDOR"],[false,", de forma gratuita."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA SEGUNDA - CONFIDENCIALIDADE"]]},
+      {t:"p", s:[[false,"12.1. As partes, por si e por seus dirigentes, prepostos ou empregados, comprometem-se, mesmo após o término do presente contrato, a manter completa confidencialidade e sigilo sobre as condições deste contrato, reconhecendo que não poderão ser divulgados ou fornecidos a terceiros, salvo com expressa autorização, por escrito, da outra parte."]]},
       {t:"p", s:[[false,"12.2. As partes serão responsáveis, civil e criminalmente, inclusive, pela inobservância da LGPD, por quaisquer danos causados uma a outra e/ou terceiros em virtude da quebra da confidencialidade e sigilo a que estão obrigadas, além de configurar infração contratual."]]},
-      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA TERCEIRA – FORO"]]},
-      {t:"p", s:[[false,"Para dirimir quaisquer controvérsias oriundas do CONTRATO, as partes elegem o foro da comarca de {{foro_comarca}}."]]},
+      {t:"clause", s:[[false,"CLÁUSULA DÉCIMA TERCEIRA - FORO"]]},
+      {t:"p", s:[[false,"13.1. Para dirimir quaisquer controvérsias oriundas do CONTRATO, as partes elegem o foro da comarca de {{foro_comarca}}."]]},
       {t:"p", s:[[false,"Por estarem assim justos e contratados, firmam o presente instrumento, em duas vias de igual teor e forma."]]},
       {t:"p", s:[[false,"{{assinatura_local}}, {{data_extenso}}."]]},
       {t:"sig2", s:[[true,"DNA ELÉTRICA ENERGIA SOLAR LTDA"],[true,"{{cli_nome}}"]]}
@@ -1077,6 +1078,31 @@ body.docmode .sheet{box-shadow:none;margin:0 auto 10px}
     });
     ["btnPdfProc","btnPdfProc2"].forEach(function (id) {
       $(id).addEventListener("click", seguro("procuracao"));
+    });
+
+    $("btnPdfAmbos").addEventListener("click", function () {
+      try {
+        var pend = validar(true);
+        atualizarStatus();
+        if (pend.length) { bloquear("Faltam " + pend.length + " campo(s) obrigatório(s). Complete os campos destacados."); return; }
+        /* 1º download: contrato */
+        abrirAba("contrato");
+        document.title = nomeArquivo("contrato");
+        toast("1/2 — salve o CONTRATO como PDF. A procuração abre em 1 segundo após você fechar esta janela.");
+        var etapa2 = function () {
+          window.removeEventListener("afterprint", etapa2);
+          setTimeout(function () {
+            abrirAba("procuracao");
+            document.title = nomeArquivo("procuracao");
+            toast("2/2 — salve a PROCURAÇÃO como PDF.");
+            setTimeout(function () { window.print(); }, 350);
+          }, 1000);
+        };
+        window.addEventListener("afterprint", etapa2);
+        setTimeout(function () { window.print(); }, 350);
+      } catch (e) {
+        toast("Erro ao gerar os PDFs: " + (e && e.message ? e.message : e) + ". Use Imprimir e escolha 'Salvar como PDF'.", true);
+      }
     });
 
     $("btnPrint").addEventListener("click", function () {
